@@ -1,0 +1,31 @@
+{% extends "blogapp/index.html" %}
+
+{% block fecha %}{% endblock %}
+
+{% block headbox %}
+<div class="error mx-auto" data-text="No hay coincidencias con su metodo de busqueda" style="font-size: 40px; width: 100%;">No hay coincidencias con su metodo de busqueda</div>
+{% endblock %}
+
+{% block seleccionar %}
+<select class="form-control" name="turno">
+  <option value="Todo" {% if request.POST.turno == 'Todo' %} selected {% endif %}>Todo</option>
+  <option value="Mañana" {% if request.POST.turno == 'Mañana' %} selected {% endif %}>Mañana</option>
+  <option value="Tarde" {% if request.POST.turno == 'Tarde' %} selected {% endif %}>Tarde</option>
+  <option value="Noche" {% if request.POST.turno == 'Noche' %} selected {% endif %}>Noche</option>
+  <option value="sinMañana-T" {% if request.POST.turno == 'sinMañana-T' %} selected {% endif %}>Parcial sin Mañana: T - N</option>
+  <option value="sinMañana-N" {% if request.POST.turno == 'sinMañana-N' %} selected {% endif %}>Parcial sin Mañana: N - T</option>
+  <option value="sinTarde-M" {% if request.POST.turno == 'sinTarde-M' %} selected {% endif %}>Parcial sin Tarde: M - N</option>
+  <option value="sinTarde-N" {% if request.POST.turno == 'sinTarde-N' %} selected {% endif %}>Parcial sin Tarde: N - M</option>
+  <option value="sinNoche-M" {% if request.POST.turno == 'sinNoche-M' %} selected {% endif %}>Parcial sin Noche: M - T</option>
+  <option value="sinNoche-T" {% if request.POST.turno == 'sinNoche-T' %} selected {% endif %}>Parcial sin Noche: T - M</option>
+  <option value="estatica-M" {% if request.POST.turno == 'estatica-M' %} selected {% endif %}>Estatica (no rota): M</option>
+  <option value="estatica-T" {% if request.POST.turno == 'estatica-T' %} selected {% endif %}>Estatica (no rota): T</option>
+  <option value="estatica-N" {% if request.POST.turno == 'estatica-N' %} selected {% endif %}>Estatica (no rota): N</option>
+
+</select>
+{% endblock %}
+
+{% block contenido %}
+<div style="height: 45em; overflow: auto;"></div>
+
+{% endblock %}

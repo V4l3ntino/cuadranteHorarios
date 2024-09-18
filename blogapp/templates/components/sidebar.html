@@ -1,0 +1,213 @@
+<!-- Sidebar -->
+<ul class="navbar-nav --bs-dark-border-subtle
+sidebar sidebar-dark accordion menuEstiloNormal" id="accordionSidebar">
+<!-- Sidebar - Brand -->
+<a id="botonBloqueador" onclick="bloquear()" class="except sidebar-brand d-flex align-items-center justify-content-center" href="#">
+    <div class="sidebar-brand-icon rotate-n-15">
+        <i class="bx bx-hourglass"></i>
+    </div>
+    <div class="sidebar-brand-text mx-3">MAKITIME </div>
+</a>
+<div id="sidebarMenu">    
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+    
+        <!-- Nav Item - Dashboard -->
+    
+    
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+    
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Interfaz
+        </div>
+    
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <span class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class='bx bx-calendar'></i>
+                <span>Turnos</span>
+            </span>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Filtrar por máquina:</h6>
+                    <a class="collapse-item" href="{% url 'turnotodo' %}">Todo</a>
+                    <a class="collapse-item" href="{% url 'turnoautos' %}">Autos</a>
+                    <a class="collapse-item" href="{% url 'turnolaser' %}">Laser</a>
+                    <a class="collapse-item" href="{% url 'turnotampo' %}">Tampografía</a>
+                    <a class="collapse-item" href="{% url 'turnopulpos' %}">Pulpos</a>
+                    <a class="collapse-item" href="{% url 'turnodigital' %}">Digital</a>
+                    <a class="collapse-item" href="{% url 'turnobordado' %}">Bordado</a>
+                    <a class="collapse-item" href="{% url 'turnotermo' %}">Termo</a>
+                    <a class="collapse-item" href="{% url 'turnoplanchas' %}">Planchas</a>
+                    <a class="collapse-item" href="{% url 'turnohorno' %}">Hornos</a>
+                    <a class="collapse-item" href="{% url 'turnosublimacion' %}">Sublimación</a>
+                    <a class="collapse-item" href="{% url 'turnoenvasado' %}">Envasado y manipulación</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class='fa-solid fa-chart-pie'></i>
+                <span>Estadísticas</span>
+            </span>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Filtrar por máquina:</h6>
+                    <!-- <a class="collapse-item" href="{% url 'turnotodo' %}">Todo</a> -->
+                    <a class="collapse-item" href="{% url 'estadisticas_auto' %}">Autos</a>
+                    <a class="collapse-item" href="{% url 'estadisticas_laser' %}">Laser</a>
+                    <a class="collapse-item" href="{% url 'estadisticas_tampo' %}">Tampografía</a>
+                    <a class="collapse-item" href="{% url 'estadisticas_pulpos' %}">Pulpos</a>
+                    <a class="collapse-item" href="{% url 'estadisticas_digital' %}">Digital</a>
+                    <a class="collapse-item" href="{% url 'estadisticas_bordado' %}">Bordado</a>
+                    <a class="collapse-item" href="{% url 'estadisticas_termo' %}">Termo</a>
+                    <a class="collapse-item" href="{% url 'estadisticas_planchas' %}">Planchas</a>
+                    <a class="collapse-item" href="{% url 'estadisticas_hornos' %}">Hornos</a>
+                    <a class="collapse-item" href="{% url 'estadisticas_sublimacion' %}">Sublimación</a>
+                    <a class="collapse-item" href="{% url 'estadisticas_envasado' %}">Envasado y manipulación</a>
+                </div>
+            </div>
+        </li>
+    
+    
+        <!-- Nav Item - Tables -->
+    
+        <li class="nav-item">
+            <span class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class='bx bx-user'></i>
+                <span>Operarios</span>
+            </span>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Filtrar por máquina:</h6>
+                    <a class="collapse-item" href="{% url 'operarios_todo' %}">Todo</a>
+                    <a class="collapse-item" href="{% url 'operarios_autos' %}">Autos</a>
+                    <a class="collapse-item" href="{% url 'operarios_laser' %}">Laser</a>
+                    <a class="collapse-item" href="{% url 'operarios_tampo' %}">Tampografía</a>
+                    <a class="collapse-item" href="{% url 'operarios_pulpos' %}">Pulpos</a>
+                    <a class="collapse-item" href="{% url 'operarios_digital' %}">Digital</a>
+                    <a class="collapse-item" href="{% url 'operarios_bordado' %}">Bordado</a>
+                    <a class="collapse-item" href="{% url 'operarios_termo' %}">Termo</a>
+                    <a class="collapse-item" href="{% url 'operarios_planchas' %}">Planchas</a>
+                    <a class="collapse-item" href="{% url 'operarios_hornos' %}">Hornos</a>
+                    <a class="collapse-item" href="{% url 'operarios_sublimacion' %}">Sublimacion</a>
+                    <a class="collapse-item" href="{% url 'operarios_envasado' %}">Envasado y manipulación</a>
+                </div>
+            </div>
+        </li>
+    
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+        <div class="sidebar-heading">
+            Herramientas
+        </div>
+    
+        <li class="nav-item">
+            <span class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i style="font-size: 20px;" class='bx bxs-user-x'></i>
+                <span>Bajas</span>
+            </span>
+            <div id="collapseSeven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Cuales quieres ver:</h6>
+                    <a class="collapse-item" href="{% url 'mostrar_mis_eventos' %}">Mis cambios</a>
+                    <a class="collapse-item" href="{% url 'mostrar_eventos' %}">Todos</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'faltas' %}">
+                <i class="fa-solid fa-xmarks-lines"></i>
+                <span>Faltas Injustificadas</span></a>
+        </li>
+        <li class="nav-item">
+            <span class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <span>Cambios</span>
+            </span>
+            <div id="collapseEight" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Cuales quieres ver:</h6>
+                    <a class="collapse-item" href="{% url 'permutasmaquina' %}">Maquinas</a>
+                    <a class="collapse-item" href="{% url 'permutasturno' %}">Turnos</a>
+                </div>
+            </div>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'permutar' %}">
+                <i class="fa-solid fa-rotate"></i>
+                <span>Permutar</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'expedientes' %}">
+                <i class='bx bxs-book-content'></i>
+                <span>Expedientes</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'ayuda' %}">
+                <i class='bx bxs-help-circle'></i>
+                <span>Ayuda</span></a>
+        </li>
+    
+    
+        <!-- Divider -->
+        <!-- <hr class="sidebar-divider d-none d-md-block">
+        <div class="sidebar-heading">
+            Comentarios
+        </div> -->
+    
+        <!-- <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
+                aria-expanded="true" aria-controls="collapseFour">
+                <i class='bx bx-chat'></i>
+                <span>Comentarios</span>
+            </a>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{% url 'tareas' %}">Chat</a>
+                    <a class="collapse-item" href="{% url 'tareas_completadas' %}">Acciones completadas</a>
+                    <a class="collapse-item" href="{% url 'crear_tareas' %}">Crear Comentarios</a>
+                </div>
+            </div>
+        </li> -->
+    
+        <hr class="sidebar-divider d-none d-md-block">
+        <div class="sidebar-heading">
+            LOGS
+        </div>
+        <li class="nav-item">
+            <span class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class='bx bx-search-alt-2'></i>
+                <span>Registros</span>
+            </span>
+            <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Operarios:</h6>
+                    <a class="collapse-item" href="{% url 'registros' %}">Actualizados</a>
+                    <a class="collapse-item" href="{% url 'operariosborrados' %}">Borrados</a>
+                </div>
+            </div>
+        </li>
+    
+    
+    
+    
+    
+    
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">    
+</div>
+<!-- Sidebar Toggler (Sidebar) -->
+<div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+</div>
+</ul>

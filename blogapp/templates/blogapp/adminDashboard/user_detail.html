@@ -1,0 +1,220 @@
+{% extends 'blogapp/index.html' %}
+
+{% block headbox %}{% endblock %}
+{% block formulario %}{% endblock %}
+
+
+
+<!-- <div class="col-md-3 mx-auto" style="height: 46em;">
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" name="nombre" class="form-control" value="{{user.username}}" required>
+                <input type="password" class="form-control" name="password" placeholder="Nueva contraseña">
+            </div>
+            <div class="form-group">
+                <label>Estado</label>
+                <select class="form-control" name="estado">
+                    <option value="admin" {% if user.is_superuser and user.is_staff %} selected {% endif %}>Admin</option>
+                    <option value="user" {% if user.is_superuser and not user.is_staff %} selected {% endif %}>Usuario con privilegios</option>
+                    <option value="userinf" {% if not user.is_superuser and not user.is_staff %} selected {% endif %}>Usuario sin privilegios</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-dark" style="background-color: #294ee5;">Aceptar</button>
+        </form>
+    </div>
+</div> -->
+{% block head %}
+    <style>
+.wrapper
+{
+    width: 420px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,.2);
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 20);
+    background-color: rgba(255, 255, 255, 0.37);
+    color: black;
+    border-radius: 10px;
+    padding: 30px 40px;
+    margin: 10% auto 0 auto;
+    transition: 2s;
+}
+@keyframes animation{
+    0%{}
+    100%{
+        width: 93%;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 20);
+    }
+}
+.wrapper h1
+{
+    font-size: 36px;
+    text-align: center;
+}
+.wrapper .input-box
+{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+}
+
+.input-box input
+{
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(44, 44, 44, 0.699);
+    border-radius: 40px;
+    font-size: 16px;
+    color: black;
+    padding: 20px 45px 20px 20px;
+}
+.input-box input::placeholder
+{
+    color: black;
+}
+.input-box i
+{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+.campos::before{
+    content: '';
+    width: 0px;
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    border-bottom: solid black 1px;
+    transition: 2s;
+    animation: animation 2s forwards;
+    animation-play-state: paused;
+}
+
+.campos:hover:before{
+    animation-play-state: running;
+}
+
+.wrapper .remember-forgot
+{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+}
+.remember-forgot label input
+{
+    accent-color: #fff;
+    margin-right: 3px;
+}
+.remember-forgot a
+{
+    color: #fff;
+    text-decoration: none;
+}
+.remember-forgot a:hover
+{
+    text-decoration: underline;
+}
+.wrapper .btn
+{
+    width: 100%;
+    height: 45px;
+    background: black;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+    font-weight: 600;
+}
+.wrapper .btn:hover{
+    background-color: white;
+    border: solid 1px black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 40);
+    color: black;
+}
+.wrapper .register-link
+{
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+.register-link p a
+{
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+.register-link p a:hover
+{
+    text-decoration: underline;
+
+}
+
+
+    </style>
+{% endblock %}
+{% block contenido %}
+
+<div style="height: 46em;">
+    <div class="wrapper">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <h1>{{ user.username }}</h1>
+            <p style="color:red; text-align: center;  transform: translateY(50%);">
+                {{error}}
+            </p>
+            <div class="input-box">
+                <input type="text" name="username" placeholder="Nuevo nombre">
+                <i class='bx bxs-user-circle' ></i>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Nueva contraseña" id="myInput">
+                <i class='bx bxs-lock-alt' onclick="myFunction()" id="toggleIcon"></i>
+            </div>
+            <div class="input-box">
+                <select class="form-control" name="estado">
+                    <option value="admin" {% if user.is_superuser and user.is_staff %} selected {% endif %}>Admin</option>
+                    <option value="user" {% if user.is_superuser and not user.is_staff %} selected {% endif %}>Usuario con privilegios</option>
+                    <option value="userinf" {% if not user.is_superuser and not user.is_staff %} selected {% endif %}>Usuario sin privilegios</option>
+                    <option value="inactivo" {% if not user.is_active %} selected {% endif %}>Inactivo</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Update</button>
+            
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function myFunction() {
+    var x = document.getElementById("myInput");
+    var icon = document.getElementById("toggleIcon")
+    if (x.type === "password") {
+        x.type = "text";
+        icon.classList.remove("bxs-lock-alt")
+        icon.classList.add("bx-lock-open-alt")
+    } else {
+        x.type = "password";
+        icon.classList.remove("bx-lock-open-alt")
+        icon.classList.add("bxs-lock-alt")
+    }
+    }
+</script>
+{% endblock %}
+
+
+
+{% block footbox %}
+
+{% endblock %}

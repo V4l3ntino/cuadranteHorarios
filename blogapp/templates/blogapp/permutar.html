@@ -1,0 +1,270 @@
+{% extends 'blogapp/index.html' %}
+
+{% block headbox %}{% endblock %}
+
+{% block fecha %}{% endblock %}
+
+
+
+{% block filtrado %}
+<form method="POST"
+              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+            >
+    {% csrf_token %}
+    <div class="input-group">
+        <input
+                  type="text"
+                  name="search"
+                  class="form-control bg-light border-0 small"
+                  placeholder="Buscar..."
+                  aria-label="Search"
+                  aria-describedby="basic-addon2"
+                  value="{{ request.POST.search }}"
+                />
+
+        <select class="form-control" name="turno">
+            <option value="Todo" {% if request.POST.turno == 'Todo' %} selected {% endif %}>Turnos</option>
+            <option value="Mañana" {% if request.POST.turno == 'Mañana' %} selected {% endif %}>Mañana</option>
+            <option value="Tarde" {% if request.POST.turno == 'Tarde' %} selected {% endif %}>Tarde</option>
+            <option value="Noche" {% if request.POST.turno == 'Noche' %} selected {% endif %}>Noche</option>
+        </select>
+        <select class="form-control" name="maquina">
+            <option value="TODO" {% if request.POST.maquina == 'TODO' %} selected {% endif %}>Maquinas</option>
+            <option value="autos" {% if request.POST.maquina == 'autos' %} selected {% endif %}>Autos</option>
+            <option value="laser" {% if request.POST.maquina == 'laser' %} selected {% endif %}>Laser</option>
+            <option value="tampo" {% if request.POST.maquina == 'tampo' %} selected {% endif %}>Tampografía</option>
+            <option value="pulpos" {% if request.POST.maquina == 'pulpos' %} selected {% endif %}>Pulpos</option>
+            <option value="digital" {% if request.POST.maquina == 'digital' %} selected {% endif %}>Digital</option>
+            <option value="bordado" {% if request.POST.maquina == 'bordado' %} selected {% endif %}>Bordado</option>
+            <option value="termo" {% if request.POST.maquina == 'termo' %} selected {% endif %}>Termo</option>
+            <option value="planchas" {% if request.POST.maquina == 'planchas' %} selected {% endif %}>Planchas</option>
+            <option value="horno" {% if request.POST.maquina == 'horno' %} selected {% endif %}>Hornos</option>
+            <option value="sublimacion" {% if request.POST.maquina == 'sublimacion' %} selected {% endif %}>Sublimación</option>
+            <option value="otros" {% if request.POST.maquina == 'otros' %} selected {% endif %}>Envasado y manipulación</option>
+        </select>
+        <input class="border rounded-4" type="date" name="fecha" value="{{ fecha_modificada }}" min="{{ minValue }}">
+        <div class="input-group-append">
+            <button class="btn btn-dark botonazo" type="submit">
+              <i class="fas fa-search fa-sm"></i>
+            </button>
+          </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block contenido %}
+
+
+<div class="d-flex">
+    <div class="table-responsive col-md-4 mx-auto" style="height: 46em;">
+        <h2>Usuarios disponibles</h2>
+        <table class="table table-bordered" id="usuarios">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Turno</th>
+                </tr>
+                
+            </thead>
+            <tbody>
+                {% for user in usuarios %}
+                <tr>
+                    <td>{{user.nombre}} {{user.apellido}}</td>
+                    <td>{{user.rotacion_fecha}}</td>
+                    <td style="display: none;">{{user.id}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div style="margin:0 2% 0 2%;">
+        <div style="display: flex;">
+          <div style="margin-right: 20px; flex-basis: 50%;">
+            <label for="fecha_inicio">Fecha Inicio</label>
+            <input class="border rounded-4" type="date" id="fecha_inicio" name="fecha" value="{{ fecha_modificada }}" min="{{ fecha_modificada }}" max="{{ fecha_modificada }}">
+          </div>
+          <div style="flex-basis: 50%; margin-right: 20px;">
+            <label for="fecha_fin">Fecha Fin</label>
+            <input class="border rounded-4" type="date" id="fecha_fin" name="fecha" value="{{ fecha_modificada }}" min="{{ fecha_modificada }}">
+          </div>
+        </div>
+        <div style="margin-top: 100%; display: flex;">
+          <a class="btn btn-primary" style="margin: auto;" onclick="permutar()">Aplicar <i class="fa-solid fa-circle-check"></i></a>
+          <span class="btn btn-danger" style="margin: auto;" onclick="reset()">Reset <i class="fa-solid fa-square-minus"></i></span>
+        </div>
+      </div>
+    <div class="table-responsive col-md-5 mx-auto" style="height: 40em;">
+        <h2>Usuarios Seleccionados</h2>
+        <table class="table table-bordered" id="usuariosSeleccionados">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Turno</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const tablaUsuarios = document.getElementById("usuarios");
+        const tablaUsuariosSeleccionados = document.getElementById("usuariosSeleccionados");
+        const usuariosBody = tablaUsuarios.querySelector("tbody");
+
+        // Función para guardar usuarios seleccionados en localStorage
+        function guardarUsuariosSeleccionados() {
+            const usuariosSeleccionados = [];
+            tablaUsuariosSeleccionados.querySelectorAll("tbody tr").forEach(function(row) {
+                const nombre = row.cells[0].innerText;
+                const turno = row.cells[1].innerText;
+                const id = row.cells[2].innerText;
+                usuariosSeleccionados.push({ nombre, turno, id });
+            });
+            localStorage.setItem("usuariosSeleccionados", JSON.stringify(usuariosSeleccionados));
+        }
+
+        // Función para cargar usuarios seleccionados desde localStorage
+        function cargarUsuariosSeleccionados() {
+            const usuariosSeleccionados = JSON.parse(localStorage.getItem("usuariosSeleccionados")) || [];
+            usuariosSeleccionados.forEach(function(usuario) {
+                const nuevaFila = document.createElement("tr");
+                nuevaFila.innerHTML = `<td>${usuario.nombre}</td><td>${usuario.turno}</td><td style="display: none;">${usuario.id}</td>`;
+                tablaUsuariosSeleccionados.querySelector("tbody").appendChild(nuevaFila);
+            });
+            return usuariosSeleccionados;
+        }
+
+        // Cargar usuarios seleccionados al cargar la página
+        const usuariosSeleccionados = cargarUsuariosSeleccionados();
+
+        // Filtrar la primera tabla para no mostrar los usuarios seleccionados
+        usuariosBody.querySelectorAll("tr").forEach(function(row) {
+            const id = row.cells[2].innerText;
+            if (usuariosSeleccionados.some(usuario => usuario.id === id)) {
+                row.remove();
+            }
+        });
+
+        tablaUsuarios.addEventListener("click", function(event) {
+            const filaClickeada = event.target.parentNode;
+            if (filaClickeada.nodeName === "TR") {
+                // Mover usuario de tabla de usuarios a tabla de usuarios seleccionados si hay menos de 2 usuarios
+                const usuariosSeleccionadosCount = tablaUsuariosSeleccionados.querySelectorAll("tbody tr").length;
+                    if (usuariosSeleccionadosCount < 2) {
+                        const nombre = filaClickeada.cells[0].innerText;
+                        const turno = filaClickeada.cells[1].innerText;
+                        const id = filaClickeada.cells[2].innerText;
+                        filaClickeada.remove(); // Eliminar fila de la tabla de usuarios
+                        const nuevaFila = document.createElement("tr");
+                        nuevaFila.innerHTML = `<td>${nombre}</td><td>${turno}</td><td style="display: none;">${id}</td>`;
+                        tablaUsuariosSeleccionados.querySelector("tbody").appendChild(nuevaFila);
+                        guardarUsuariosSeleccionados(); // Guardar en localStorage
+                    } else {
+                        alert("Solo se pueden seleccionar un máximo de 2 usuarios.");
+                    }
+            }
+        });
+
+        tablaUsuariosSeleccionados.addEventListener("click", function(event) {
+            const filaClickeada = event.target.parentNode;
+            if (filaClickeada.nodeName === "TR") {
+                // Mover usuario de tabla de usuarios seleccionados a tabla de usuarios
+                const nombre = filaClickeada.cells[0].innerText;
+                const turno = filaClickeada.cells[1].innerText;
+                const id = filaClickeada.cells[2].innerText;
+                filaClickeada.remove(); // Eliminar fila de la tabla de usuarios seleccionados
+                const nuevaFila = document.createElement("tr");
+                nuevaFila.innerHTML = `<td>${nombre}</td><td>${turno}</td><td style="display: none;">${id}</td>`;
+                tablaUsuarios.querySelector("tbody").appendChild(nuevaFila);
+                guardarUsuariosSeleccionados(); // Guardar en localStorage
+            }
+        });
+
+        // Función para resetear los usuarios seleccionados
+        window.reset = function() {
+            const usuariosSeleccionadosBody = tablaUsuariosSeleccionados.querySelector("tbody");
+            const filasSeleccionadas = usuariosSeleccionadosBody.querySelectorAll("tr");
+            filasSeleccionadas.forEach(function(fila) {
+                const nombre = fila.cells[0].innerText;
+                const turno = fila.cells[1].innerText;
+                const id = fila.cells[2].innerText;
+                fila.remove(); // Eliminar fila de la tabla de usuarios seleccionados
+                const nuevaFila = document.createElement("tr");
+                nuevaFila.innerHTML = `<td>${nombre}</td><td>${turno}</td><td style="display: none;">${id}</td>`;
+                tablaUsuarios.querySelector("tbody").appendChild(nuevaFila);
+            });
+            localStorage.removeItem("usuariosSeleccionados"); // Eliminar del localStorage
+        };
+    });
+
+    let permutar = () => {
+        var table = document.getElementById('usuariosSeleccionados');
+        var rows = table.rows;
+        var conjunto_lista = [];
+        for (var i = 1; i < rows.length; i++) { // i = 1 para omitir la cabecera
+            var listaContentFila = [];
+            for (var a = 0; a < rows[i].cells.length; a++) { 
+                listaContentFila.push(rows[i].cells[a].textContent);
+            }
+            conjunto_lista.push(listaContentFila);
+        }
+        var csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value; // Obtener el token CSRF desde el formulario
+        
+        console.log(conjunto_lista)
+          var fecha_inicio = document.getElementById("fecha_inicio").value
+          var fecha_fin = document.getElementById("fecha_fin").value
+
+          var dateini = new Date(fecha_inicio);
+          var datefin = new Date(fecha_fin);
+          
+          if (dateini <= datefin){
+            if (conjunto_lista.length > 1){
+              reset()
+              // Crear el objeto de datos a enviar
+              var datos = {
+                csrfmiddlewaretoken: csrftoken,
+                lista: conjunto_lista,
+                fecha_inicio: fecha_inicio,
+                fecha_fin: fecha_fin
+              };
+              // Realizar la solicitud fetch
+              fetch('/permutar/', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify(datos) // Convertir los datos a JSON
+              })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Error en la solicitud fetch');
+                }
+                
+                // Redirigir a una nueva página HTML después de una solicitud exitosa
+                window.location.href = '/dashboard/';
+              })
+              .catch(function(error) {
+                // Manejar errores
+                console.error('Hubo un problema con la solicitud fetch:', error);
+              });
+            }else{
+              alert("Seleccione dos usuarios para aplicar la permuta")
+            }
+          } else{
+            alert("¡Aviso! La fecha inicio debe ser inferior a la fecha final para que los datos sean correctos")
+          }
+        
+    }
+</script>
+
+
+
+
+{% endblock %}
+
+
+

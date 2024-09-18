@@ -1,0 +1,91 @@
+{% extends 'blogapp/index.html' %}
+
+{% block headbox %}Gráfico de un día entero {% if user is not None %}: {{user.nombre}}, {{user.apellido}}{% endif %}{% endblock %}
+
+{% block fecha %}<a href="{% url 'dashboard' %}" class="btn btn-primary">Volver</a>{% endblock %}
+
+{% block filtrado %}
+    
+
+<form method="POST"
+class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    {% csrf_token %}    
+    <select class="form-control" name="tipo">
+        <option value="d" {% if request.POST.tipo == 'd' or tipo == 'd' %} selected {% endif %}>Dia</option>
+        <option value="s" {% if request.POST.tipo == 's' or tipo == 's' %} selected {% endif %}>Semana</option>
+        <option value="a" {% if request.POST.tipo == 'a' or tipo == 'a' %} selected {% endif %}>Año</option>
+    </select>
+    <input class="border rounded-4" type="date" name="fecha" value="{{ fecha_modificada }}" min="{{ minValue }}">
+    <button class="btn btn-dark botonazo" type="submit"><i class="fas fa-search fa-sm"></i></button>
+
+</form>
+{% endblock %}
+
+{% block contenido %}
+
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var Mañana = {{ Mañana }}
+    var Tarde = {{ Tarde }}
+    var Noche = {{ Noche }}
+    var Licencia = {{ Licencia }}
+    var Vacaciones = {{ Vacaciones }}
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+        
+        // Datos para cada turno con dos sub-categorías
+        const data = {
+            labels: ['Mañana', 'Tarde', 'Noche', 'Licencia', 'Vacaciones'], // Etiquetas para los grupos
+            datasets: [
+                {
+                    label: 'turnos', // Etiqueta para el conjunto de datos
+                    data: [Mañana, Tarde, Noche, Licencia, Vacaciones], // Valores para cada grupo en la primera subcategoría
+                    backgroundColor: [
+                        'rgba(12, 74, 110, 0.2)',  // Color para 'Mañana'
+                        'rgba(255, 165, 0, 0.2)',  // Color para 'Tarde'
+                        'rgba(0, 0, 0, 0.2)',  // Color para 'Noche'
+                        'rgba(90, 122, 35, 0.2)',  // Color para 'Licencia'
+                        'rgba(64, 224, 208, 0.2)'  // Color para 'Vacaciones'
+                    ],
+                    borderColor: [
+                        'rgba(12, 74, 110, 1)',    // Borde para 'Mañana'
+                        'rgba(255, 165, 0, 1)',    // Borde para 'Tarde'
+                        'rgba(0, 0, 0, 0.2)',    // Borde para 'Noche'
+                        'rgba(90, 122, 35,  1)',    // Borde para 'Licencia'
+                        'rgba(64, 224, 208, 1)'    // Borde para 'Vacaciones'
+                    ],
+                    borderWidth: 1
+                }
+            ]
+        };
+        // Configuración del gráfico
+        const config = {
+            type: 'polarArea', // Tipo de gráfico
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true // El eje Y empieza en cero
+                    }
+                },
+                responsive: true, // Gráfico adaptativo
+                plugins: {
+                    legend: {
+                        position: 'top', // Posición de la leyenda
+                    },
+                    title: {
+                        display: true,
+                        text: 'Comparación de Turnos' // Título del gráfico
+                    }
+                }
+            }
+        };
+
+        // Crear el gráfico
+        const myChart = new Chart(ctx, config);
+  </script>  
+
+{% endblock %}

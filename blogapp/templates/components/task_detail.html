@@ -1,0 +1,50 @@
+{% extends "blogapp/index.html" %}
+{% block fecha %}
+
+{% endblock %}
+{% block filtrado %}
+
+{% endblock %}
+{% block headbox %}
+<h6 class="text-center display-4 m-0 font-weight-bold text-primary">Editar Tareas</h6>
+{% endblock %}
+
+{% block contenido %}
+<div style="height: 37em; overflow: auto;">
+<main class="container" style="margin-top: 2em;" >
+    <div class="row">
+        <div class="col-md-8 offset-md-2"style="margin-bottom: 8em;">
+            
+
+                <form method="POST">
+                    {% csrf_token %}
+                    {{form}}
+                    <div class="w-50">
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-primary">
+                                Editar
+                            </button>
+                        </form>
+        
+                        <form action="{% url 'completar_tarea' tarea.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-primary">
+                                Completada
+                            </button>
+                        </form>
+                        <form action="{% url 'eliminar_tarea' tarea.id %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-danger">
+                                Eliminar
+                            </button>
+                        </form>
+                        </div>
+                    </div>
+        </div>
+
+    </div>
+</main>
+</div>
+{% endblock %}
+{% block footbox %}
+{% endblock %}

@@ -1,0 +1,214 @@
+{% extends "blogapp/index.html" %}
+
+{% block formulario %}
+
+{% endblock %}
+{% block headbox %}
+<h6 class="text-center display-4 m-0 font-weight-bold text-primary">Tutoriales de cada sección</h6>
+
+{% endblock %}
+
+
+{% block head %}
+<style>
+
+.bottom-bar{
+    background-color: #eee;
+    max-width: 5em;
+    border-radius: 0 20px 20px 0;
+    position: relative;
+}
+.bottom-bar a{
+    text-decoration: none;
+    color: black;
+}
+.icon{
+    font-size: 1.5em;
+    padding: .5em;
+    margin: .5em;
+    margin-top: 0;
+    transition: .5s ease-in-out;
+    border-radius: 100%;
+    border: 7px solid #eee;
+}
+.active{
+    transform: scale(1.25) translateX(1em);
+    background: linear-gradient(135deg, #23f,#6589ff);
+    border: 7px solid #fff;
+    color: white;
+}
+.grupo1 span{
+        border-radius: 20px;
+        width: 49%;
+        border: solid 1px #cccccc;
+        padding: 10px;
+        margin-top: 5px;
+        transition: 0.1s ease;
+        position: relative;
+        backdrop-filter: blur(20px);
+    }
+
+.btnDisenio{
+    position: relative;
+    display: inline-block;
+    padding: 10px 30px;
+    background: #363636;
+    
+    letter-spacing: 1px;
+    overflow: hidden;
+    border-radius: 3px;
+}
+.btnDisenio a div{
+    color: #fff;
+}
+.btnDisenio:hover a{
+    text-decoration: none;
+}
+
+.btnDisenio div
+{
+    position: relative;
+    z-index: 1;
+}
+.btnDisenio::before
+{
+    content: '';
+    position: absolute;
+    top: -80%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    background: #2196f3;
+    transition: width 0.5s, height 0.5s;
+}
+
+.btnDisenio:hover::before
+{
+    width: 300px;
+    height: 300px;
+    
+}
+</style>
+{% endblock %}
+
+{% block contenido %}
+
+<br>
+<div style="display: flex; width: 100%; justify-content: space-between;">
+    <div style="max-height: 100%; display: flex; align-items: center;">
+        <div class="bottom-bar">
+            <a class="except" href="#turnos"><i class='bx bx-calendar icon active' onclick="change(this)"></i></a>
+            <a class="except" href="#estadisticas"><i class='fa-solid fa-chart-pie icon' onclick="change(this)"></i></a>
+            <a class="except" href="#operarios"><i class='bx bx-user icon' onclick="change(this)"></i></a>
+            <a class="except" href="#bajas"><i class='bx bxs-user-x icon' onclick="change(this)"></i></a>
+            <a class="except" href="#cambios"><i class="fa-solid fa-clock-rotate-left icon" onclick="change(this)"></i></a>
+        </div>
+    </div>
+    <div  style="height: 50em; width: 90%; overflow: scroll; scroll-behavior: smooth;">
+    
+        <div class="list-group grupo1" style="margin: auto;width: 100%;">
+            <h1 id="turnos">Turnos <i class='bx bx-calendar ' ></i></h1>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/ea873e8e-548d-416c-a652-09a6e885ec21?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/ea873e8e-548d-416c-a652-09a6e885ec21?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>
+                </span>
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/24ca17ca-cdf1-43e4-86f6-06acb9d68710?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/24ca17ca-cdf1-43e4-86f6-06acb9d68710?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>
+                </span>
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/3b6ec40e-8605-4487-9605-b0bc1a3e0c17?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/3b6ec40e-8605-4487-9605-b0bc1a3e0c17?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>            
+                </span>
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/f4b66980-4eff-41c1-a71c-a5a523491d0b?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/f4b66980-4eff-41c1-a71c-a5a523491d0b?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>            
+                </span>
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/26946b15-9429-4b3b-87e4-e292e57f14ed?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/26946b15-9429-4b3b-87e4-e292e57f14ed?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>            
+                </span>
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/aeab7426-4a90-4d51-ad23-ba24984571dc?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/aeab7426-4a90-4d51-ad23-ba24984571dc?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>            
+                </span>
+            </div>
+            <br>
+            <h1 id="estadisticas">Estadísticas <i class='fa-solid fa-chart-pie ' onclick="change(this)"></i></h1>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/ef8f46ca-f6f6-4550-a7a9-aa93934fa221?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/ef8f46ca-f6f6-4550-a7a9-aa93934fa221?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>
+                </span>
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/ca7f1f83-6e12-46e9-88d2-9fb3eb0e1027?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/ca7f1f83-6e12-46e9-88d2-9fb3eb0e1027?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>                
+                </span>
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/7b763c5f-f815-4bae-9a45-278aa999a997?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/7b763c5f-f815-4bae-9a45-278aa999a997?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>                                
+                </span>
+            </div>
+            <br>
+            <h1 id="operarios">Operarios <i class='bx bx-user ' onclick="change(this)"></i></h1>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                <span style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/89045e9e-1dad-44e8-a0bc-87dae6a7de7d?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/89045e9e-1dad-44e8-a0bc-87dae6a7de7d?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>
+                </span>
+                <span style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/8ded1879-b592-4eb2-89f1-1d094044d692?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/8ded1879-b592-4eb2-89f1-1d094044d692?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>            
+                </span>
+            </div>
+            <br>
+            <h1 id="bajas">Bajas <i class='bx bxs-user-x ' onclick="change(this)"></i></h1>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/f4b66980-4eff-41c1-a71c-a5a523491d0b?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/f4b66980-4eff-41c1-a71c-a5a523491d0b?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>            
+                </span>
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/d6983492-dc23-4286-8511-3efd2eed1b6a?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/d6983492-dc23-4286-8511-3efd2eed1b6a?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>            
+                </span>
+            </div>
+            <br>
+            <h1 id="cambios">Cambios <i class="fa-solid fa-clock-rotate-left " onclick="change(this)"></i></h1>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/21b459f2-ed94-4a2a-afac-b35eb73562b0?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/21b459f2-ed94-4a2a-afac-b35eb73562b0?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>            
+                </span>          
+                <span href="" style="text-decoration: none; z-index: 10;">
+                    <div class="btnDisenio "><a class="except" target="_blank" href="https://app.uphint.com/guide/ef382444-8c7e-4193-9bf1-db1d169ba37d?embed=true"><div>Ver Más</div></a></div>
+                    <iframe src="https://app.uphint.com/guide/ef382444-8c7e-4193-9bf1-db1d169ba37d?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>            
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function change(item){
+        const buttons = document.querySelectorAll('i');
+        buttons.forEach(function(obj){
+            obj.classList.remove("active");
+        });
+        item.classList.add("active");
+    }
+</script>
+<script type="text/javascript" src="vanilla-tilt.js"></script>  
+<script>
+    VanillaTilt.init(document.querySelectorAll(".card"),{
+    max: 25,
+    speed: 400,
+    glare: true,
+    "max-glare": 1,
+});
+</script>
+{% endblock %}
+{% block footbox %}
+{% endblock %}

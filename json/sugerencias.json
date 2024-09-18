@@ -1,0 +1,38 @@
+[
+    {
+        "id_request": 1,
+        "fecha": "2024-09-03",
+        "maquina": "laser",
+        "turno": "Ma\u00f1ana"
+    },
+    {
+        "id_request": 6,
+        "fecha": "2024-08-01",
+        "maquina": "SUBLICIN",
+        "turno": "Tarde"
+    },
+    {
+        "id_request": 25,
+        "fecha": "2024-07-28",
+        "maquina": "otros",
+        "turno": "Tarde"
+    },
+    {
+        "id_request": 30,
+        "fecha": "2024-07-26",
+        "maquina": "autos",
+        "turno": "Ma\u00f1ana"
+    },
+    {
+        "id_request": 3,
+        "fecha": "2024-08-21",
+        "maquina": "laser",
+        "turno": "Tarde"
+    },
+    {
+        "id_request": 2,
+        "fecha": "2024-09-03",
+        "maquina": "autos",
+        "turno": "Ma\u00f1ana"
+    }
+]

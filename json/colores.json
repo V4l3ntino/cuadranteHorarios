@@ -1,0 +1,22 @@
+{
+    "autos": {
+        "green": 0,
+        "red": -5
+    },
+    "pulpos": {
+        "green": 0,
+        "red": -2
+    },
+    "laser": {
+        "green": 0,
+        "red": -1
+    },
+    "envasado": {
+        "green": 0,
+        "red": -9
+    },
+    "horno": {
+        "green": 0,
+        "red": -4
+    }
+}

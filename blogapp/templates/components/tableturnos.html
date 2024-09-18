@@ -1,0 +1,158 @@
+<div class="table-responsive" style="height: 46em;">
+    <input type="text" style="display: none;" value="{{diccionario.maquina}}" id="maquina">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        {% if not "turnos/turnotodo/" in request.path %}
+            <thead style="color: black;">
+                <tr style="color: white; cursor: pointer;">
+                    <th style="background-color: white; border: none;" colspan="3"></th>
+                
+                    <th style="color: black;" class="sticky-column">Mañana</th>
+                </tr>
+                <tr style="color: white; cursor: pointer;">
+                    <th  style="background-color: white; border: none;" colspan="3"></th>
+                    <th style="color: black;" class="sticky-column">Tarde</th>
+                </tr>
+                <tr style="color: white; cursor: pointer;">
+                    <th style="background-color: white; border: none;"  colspan="3"></th>
+                    <th style="color: black;" class="sticky-column">Noche</th>
+                </tr>
+                <tr>
+                    <th class="sticky-column-top4 sticky-column-4" colspan="3"
+                    style="border: 0px;"
+                    ></th>
+                    <th class="sticky-column-top">Años</th>
+                    {% for date in diccionario.año %}
+                        <th class="sticky-column-top">{{date}}</th>                
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th class="sticky-column-top5 sticky-column-4" colspan="3"
+                    style="border-top: 0px; border-left: 0px;"
+                    ></th>
+                    <th class="sticky-column-top1">Meses</th>
+                    {% for date in diccionario.mes %}
+                        <th class="sticky-column-top1">{{date}}</th>                
+                    {% endfor %}
+                </tr>
+    
+                <tr>
+                    <th class="sticky-column sticky-column-top3" >Id</th>
+                    <th class="sticky-column-2 sticky-column-top3">Nombre</th>
+                    <th class="sticky-column-3 sticky-column-top3">Apellido</th>
+                    <th class="sticky-column-top2" style="display: none;">Maquina</th>
+                    <th class="sticky-column-top2">2º Conocimiento</th>
+                    {% for date in diccionario.fechas %}
+                        <th class="sticky-column-top2">{{date}}</th>                
+                    {% endfor %}
+                </tr>
+    
+            </thead>
+            <tbody>
+                {% for  user in diccionario.operarios %}
+                <!-- <tr onclick="window.location.href='{% url 'user_detail' user.id %}';" style="cursor: pointer;"> -->
+                <tr>
+                    <td class="sticky-column" >{{ user.id }}</td>
+                    <td class="sticky-column-2">{{user.nombre}}</td>
+                    <td class="sticky-column-3">{{user.apellido}}</td>
+                    <td style="display: none;">{{user.maquina}}</td>
+                    <td>{{user.conocimientos}}</td>
+                    {% if user.limiteRotacion == True %}
+                        {% for turno in user.rotacionMes %}
+                                <td style="cursor: pointer;" onclick="enviarDatos(this)">{{ turno }}</td>
+                        {% endfor %}
+                    {% else %}
+                        {% for turno in user.rotacion %}
+                                <td style="cursor: pointer;" onclick="enviarDatos(this)">{{ turno }}</td>
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+                {% endfor %}    
+            </tbody>        
+        {% else %}
+            <thead style="color: black;">
+                <tr style="color: white; cursor: pointer;">
+                    <th style="background-color: white; border: none;" colspan="4"></th>
+                
+                    <th style="color: black;" class="sticky-column">Mañana</th>
+                </tr>
+                <tr style="color: white; cursor: pointer;">
+                    <th  style="background-color: white; border: none;" colspan="4"></th>
+                    <th style="color: black;" class="sticky-column">Tarde</th>
+                </tr>
+                <tr style="color: white; cursor: pointer;">
+                    <th style="background-color: white; border: none;"  colspan="4"></th>
+                    <th style="color: black;" class="sticky-column">Noche</th>
+                </tr>
+                <tr>
+                    <th class="sticky-column-top4 sticky-column-4" colspan="4"
+                    style="border: 0px;"
+                    ></th>
+                    <th class="sticky-column-top">Años</th>
+                    {% for date in diccionario.año %}
+                        <th class="sticky-column-top">{{date}}</th>                
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th class="sticky-column-top5 sticky-column-4" colspan="4"
+                    style="border-top: 0px; border-left: 0px;"
+                    ></th>
+                    <th class="sticky-column-top1">Meses</th>
+                    {% for date in diccionario.mes %}
+                        <th class="sticky-column-top1">{{date}}</th>                
+                    {% endfor %}
+                </tr>
+    
+                <tr>
+                    <th class="sticky-column sticky-column-top3" >Id</th>
+                    <th class="sticky-column-2 sticky-column-top3">Nombre</th>
+                    <th class="sticky-column-3 sticky-column-top3">Apellido</th>
+                    <th class="sticky-column-top2">Maquina</th>
+                    <th class="sticky-column-top2">2º Conocimiento</th>
+                    {% for date in diccionario.fechas %}
+                        <th class="sticky-column-top2">{{date}}</th>                
+                    {% endfor %}
+                </tr>
+    
+            </thead>        
+            <tbody>
+                {% for  user in diccionario.operarios %}
+                <!-- <tr onclick="window.location.href='{% url 'user_detail' user.id %}';" style="cursor: pointer;"> -->
+                <tr>
+                    <td class="sticky-column" >{{ user.id }}</td>
+                    <td class="sticky-column-2">{{user.nombre}}</td>
+                    <td class="sticky-column-3">{{user.apellido}}</td>
+                    <td>{{user.maquina}}</td>
+                    <td>{{user.conocimientos}}</td>
+                    {% if user.limiteRotacion == True %}
+                        {% for turno in user.rotacionMes %}
+                                <td style="cursor: pointer;" onclick="enviarDatos(this)">{{ turno }}</td>
+                        {% endfor %}
+                    {% else %}
+                        {% for turno in user.rotacion %}
+                                <td style="cursor: pointer;" onclick="enviarDatos(this)">{{ turno }}</td>
+                        {% endfor %}
+                    {% endif %}
+                </tr>
+                {% endfor %}    
+            </tbody>
+        {% endif %}
+        
+        <tfoot style="display: none;">
+            <tr>
+                <th colspan="4"></th>
+                <th>Meses</th>
+                {% for date in diccionario.mes %}
+                    <th style="border: 0px;" id="tfoot">{{date}}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                <th colspan="4"></th>
+                <th>Años</th>
+                {% for date in diccionario.año %}
+                    <th style="border: 0px;" id="tfoot">{{date}}</th>
+                {% endfor %}
+            </tr>
+        </tfoot>
+    </table>
+ 
+  </div>

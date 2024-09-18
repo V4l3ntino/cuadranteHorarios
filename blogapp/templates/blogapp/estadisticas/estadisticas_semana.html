@@ -1,0 +1,155 @@
+{% extends 'blogapp/index.html' %}
+
+{% block headbox %}Gráfico de la Semana entera {% if user is not None %}: {{user.nombre}}, {{user.apellido}}{% endif %}{% endblock %}
+
+{% block fecha %}<a href="{% url 'dashboard' %}" class="btn btn-primary">Volver</a>{% endblock %}
+
+{% block filtrado %}
+    
+
+<form method="POST"
+class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    {% csrf_token %}    
+    <select class="form-control" name="tipo">
+        <option value="d" {% if request.POST.tipo == 'd' or tipo == 'd' %} selected {% endif %}>Dia</option>
+        <option value="s" {% if request.POST.tipo == 's' or tipo == 's' %} selected {% endif %}>Semana</option>
+        <option value="a" {% if request.POST.tipo == 'a' or tipo == 'a' %} selected {% endif %}>Año</option>
+    </select>
+    <input class="border rounded-4" type="date" name="fecha" value="{{ fecha_modificada }}" min="{{ minValue }}">
+    <button class="btn btn-dark botonazo" type="submit"><i class="fas fa-search fa-sm"></i></button>
+
+</form>
+{% endblock %}
+
+{% block contenido %}
+
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var lunesMañana = {{ L_Mañana }};
+    var lunesTarde = {{ L_Tarde }};
+    var lunesNoche = {{ L_Noche }};
+    var lunesLicencia = {{ L_Licencia }};
+    var lunesVacaciones = {{ L_Vacaciones }};
+
+    var martesMañana = {{ Ma_Mañana }};
+    var martesTarde = {{ Ma_Tarde }};
+    var martesNoche = {{ Ma_Noche }};
+    var martesLicencia = {{ Ma_Licencia }};
+    var martesVacaciones = {{ Ma_Vacaciones }};
+
+    var miercolesMañana = {{ Mi_Mañana }};
+    var miercolesTarde = {{ Mi_Tarde }};
+    var miercolesNoche = {{ Mi_Noche }};
+    var miercolesLicencia = {{ Mi_Licencia }};
+    var miercolesVacaciones = {{ Mi_Vacaciones }};
+
+    var juevesMañana = {{ J_Mañana }};
+    var juevesTarde = {{ J_Tarde }};
+    var juevesNoche = {{ J_Noche }};
+    var juevesLicencia = {{ J_Licencia }};
+    var juevesVacaciones = {{ J_Vacaciones }};
+
+    var viernesMañana = {{ V_Mañana }};
+    var viernesTarde = {{ V_Tarde }};
+    var viernesNoche = {{ V_Noche }};
+    var viernesLicencia = {{ V_Licencia }};
+    var viernesVacaciones = {{ V_Vacaciones }};
+
+    var sabadoMañana = {{ Sa_Mañana }};
+    var sabadoTarde = {{ Sa_Tarde }};
+    var sabadoNoche = {{ Sa_Noche }};
+    var sabadoLicencia = {{ Sa_Licencia }};
+    var sabadoVacaciones = {{ Sa_Vacaciones }};
+
+    var domingoMañana = {{ D_Mañana }};
+    var domingoTarde = {{ D_Tarde }};
+    var domingoNoche = {{ D_Noche }};
+    var domingoLicencia = {{ D_Licencia }};
+    var domingoVacaciones = {{ D_Vacaciones }};
+
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+        
+        // Datos para cada turno con dos sub-categorías
+        const data = {
+            labels: ['{{Lunes}}', '{{Martes}}', '{{Miercoles}}', '{{Jueves}}', '{{Viernes}}', '{{Sabado}}', '{{Domingo}}'], // Etiquetas para los grupos
+            datasets: [
+                {
+                    label: 'Mañana', // Etiqueta para el primer conjunto de datos
+                    data: [lunesMañana, martesMañana, miercolesMañana, juevesMañana, viernesMañana, sabadoMañana, domingoMañana], // Valores para cada grupo en la primera subcategoría
+                    backgroundColor: 'rgba(12, 74, 110, 0.2)',
+                    borderColor: 'rgba(12, 74, 110, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Tarde', // Etiqueta para el segundo conjunto de datos
+                    data: [lunesTarde, martesTarde, miercolesTarde, juevesTarde, viernesTarde, sabadoTarde, domingoTarde], // Valores para cada grupo en la segunda subcategoría
+                    backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                    borderColor: 'rgba(255, 165, 0, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Noche', // Etiqueta para el segundo conjunto de datos
+                    data: [lunesNoche, martesNoche, miercolesNoche, juevesNoche, viernesNoche, sabadoNoche, domingoNoche], // Valores para cada grupo en la segunda subcategoría
+                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                    borderColor: 'rgba(0, 0, 0, 0.2)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Licencia', // Etiqueta para el segundo conjunto de datos
+                    data: [lunesLicencia, martesLicencia, miercolesLicencia, juevesLicencia, viernesLicencia, sabadoLicencia, domingoLicencia], // Valores para cada grupo en la segunda subcategoría
+                    backgroundColor: 'rgba(90, 122, 35, 0.2)', 
+                    borderColor: 'rgba(90, 122, 35,  1)', 
+                    borderWidth: 1
+                },
+                {
+                    label: 'Vacaciones', // Etiqueta para el segundo conjunto de datos
+                    data: [lunesVacaciones, martesVacaciones, miercolesVacaciones, juevesVacaciones, viernesVacaciones, sabadoVacaciones, domingoVacaciones], // Valores para cada grupo en la segunda subcategoría
+                    backgroundColor: 'rgba(64, 224, 208, 0.2)', 
+                    borderColor: 'rgba(64, 224, 208, 1)', 
+                    borderWidth: 1
+                },
+                {
+                label: 'Operarios Necesarios',
+                data: [{{ necesarios }}, {{ necesarios }}, {{ necesarios }}, {{ necesarios }}, {{ necesarios }}, {{ necesarios }}, {{ necesarios }}],
+                type: 'line',
+                borderColor: 'red',
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: true,
+                borderDash: [5, 5],
+                }
+            ]
+        };
+
+        // Configuración del gráfico
+        const config = {
+            type: 'bar', // Tipo de gráfico
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true // El eje Y empieza en cero
+                    }
+                },
+                responsive: true, // Gráfico adaptativo
+                plugins: {
+                    legend: {
+                        position: 'top', // Posición de la leyenda
+                    },
+                    title: {
+                        display: true,
+                        text: 'Comparación de Turnos' // Título del gráfico
+                    }
+                }
+            }
+        };
+
+        // Crear el gráfico
+        const myChart = new Chart(ctx, config);
+  </script>  
+
+{% endblock %}

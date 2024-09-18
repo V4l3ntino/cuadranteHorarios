@@ -1,0 +1,213 @@
+{% extends "blogapp/index.html" %}
+
+{% block formulario %}
+<!-- <select class="form-control" name="turno">
+    <option value="Todo" {% if request.POST.turno == 'Todo' %} selected {% endif %}>Todos</option>
+    <option value="M" {% if request.POST.turno == 'M' %} selected {% endif %}>Mañana</option>
+    <option value="T" {% if request.POST.turno == 'T' %} selected {% endif %}>Tarde</option>
+    <option value="N" {% if request.POST.turno == 'N' %} selected {% endif %}>Noche</option>
+    <option value="L" {% if request.POST.turno == 'L' %} selected {% endif %}>Licencia</option>
+    <option value="V" {% if request.POST.turno == 'V' %} selected {% endif %}>Vacaciones</option>
+</select>
+<select class="form-control" name="maquina">
+    <option value="TODO" {% if request.POST.maquina == 'TODO' %} selected {% endif %}>Maquinas</option>
+    <option value="autos" {% if request.POST.maquina == 'autos' %} selected {% endif %}>Autos</option>
+    <option value="laser" {% if request.POST.maquina == 'laser' %} selected {% endif %}>Laser</option>
+    <option value="tampo" {% if request.POST.maquina == 'tampo' %} selected {% endif %}>Tampografía</option>
+    <option value="pulpos" {% if request.POST.maquina == 'pulpos' %} selected {% endif %}>Pulpos</option>
+    <option value="digital" {% if request.POST.maquina == 'digital' %} selected {% endif %}>Digital</option>
+    <option value="bordado" {% if request.POST.maquina == 'bordado' %} selected {% endif %}>Bordado</option>
+    <option value="termo" {% if request.POST.maquina == 'termo' %} selected {% endif %}>Termo</option>
+    <option value="planchas" {% if request.POST.maquina == 'planchas' %} selected {% endif %}>Planchas</option>
+    <option value="sublimacion" {% if request.POST.maquina == 'sublimacion' %} selected {% endif %}>Sublimación</option>
+    <option value="otros" {% if request.POST.maquina == 'otros' %} selected {% endif %}>Envasado y manipulación</option>
+</select> -->
+{% endblock %}
+{% block headbox %}
+<h6 class="text-center display-4 m-0 font-weight-bold text-primary">Tutoriales</h6>
+{% endblock %}
+
+
+{% block head %}
+<style>
+    
+    .grupo1 span{
+        border-radius: 20px;
+        width: 49%;
+        border: solid 1px #cccccc;
+        padding: 10px;
+        margin-top: 5px;
+        transition: 0.1s ease;
+        position: relative;
+        backdrop-filter: blur(20px);
+    }
+    .grupo1 span:hover{
+        
+        box-shadow: 0 0 5px #666666;
+    }
+    .grupo1 span:hover .boton{
+        box-shadow: 0 0 10px #666666;
+    }
+    .input-box
+    {
+        position: relative;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .input-box input
+    {
+        width: 100%;
+        height: 40px;
+        font-size: 20px;
+        background: white;
+        outline: none;
+        border: 2px solid rgba(163, 163, 163, 0.322);
+        border-radius: 40px;
+        font-size: 16px;
+        color: black;
+        padding: 20px 45px 20px 20px;
+        text-align: center;
+    }
+    .fecha{
+    display: flex;    
+    }
+    label{
+        color: black;
+    }
+
+     .btn
+    {
+        position: relative;
+        width: 155px;
+        height: 50px;
+        margin: 20px;
+        top: 0%;
+    }
+     .btn a
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background:rgba(128, 128, 128, 0.152);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        border-top: 1px solid rgba(255,255,255,0.01);
+        border-bottom: 1px solid rgba(255,255,255,0.01);
+        border-radius: 30px;
+        color: #fff;
+        z-index: 1;
+        font-weight: 400;
+        letter-spacing: 1px;
+        text-decoration: none;
+        overflow: hidden;
+        transition: 0.5s;
+        backdrop-filter: blur(40px);
+        text-decoration: none;
+    }
+     .btn:hover a
+    {
+        letter-spacing: 3px;
+        text-decoration: none;
+        color: white;
+    } 
+     .btn a:before
+    {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        background:linear-gradient(to left, rgba(255,255,255,0.15), transparent);
+        transform: skewX(45deg) translateX(0);
+        transition: 0.5s;
+    }
+    .btn:hover a:before
+    {
+        transform: skewX(45deg) translateX(200%);
+    }
+     .btn:before 
+    {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -5px;
+        width: 30px;
+        height: 10px;
+        border-radius: 10px;
+        transition: 0.5s;
+        transition-delay: 0s;
+    
+    }
+    .btn:hover:before
+    {
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+        border-radius: 30px;
+        transition-delay: 0.5s;
+    }
+     .btn:after 
+    {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -5px;
+        width: 30px;
+        height: 10px;
+        border-radius: 10px;
+        transition: 0.5s;
+        transition-delay: 0s;
+    
+    }
+    
+
+     .btn1:before
+    {
+        background-color: #2bd2ff;
+        box-shadow: 0 0 5px #2bd2ff,
+         0 0 15px #2bd2ff,
+         0 0 30px #2bd2ff,
+         0 0 60px #2bd2ff;
+    }
+    
+</style>
+{% endblock %}
+
+{% block contenido %}
+
+<div style="height: 43em; overflow: auto;" >
+    <div class="list-group grupo1" style="margin: auto;width: 100%;">
+        <br>
+        <div style="display: flex; flex-wrap: wrap; gap: 15px; width: 100%; justify-content: center;">
+            <!-- <span style="text-decoration: none; z-index: 10;">
+                <button class="boton btn-info"><a class="except" target="_blank" href="https://app.uphint.com/guide/89045e9e-1dad-44e8-a0bc-87dae6a7de7d?embed=true"><i class="fa-regular fa-eye"></i></a></button>
+                <iframe src="https://app.uphint.com/guide/89045e9e-1dad-44e8-a0bc-87dae6a7de7d?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>
+            </span>
+            <span href="" style="text-decoration: none; z-index: 10;">
+                <button class="boton btn-info"><a class="except" target="_blank" href="https://app.uphint.com/guide/4c1ab28c-d1e7-46ba-ac61-179699f39b34?embed=true"><i class="fa-regular fa-eye"></i></a></button>
+                <iframe src="https://app.uphint.com/guide/4c1ab28c-d1e7-46ba-ac61-179699f39b34?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>
+            </span> -->
+            <span href="" style="text-decoration: none; z-index: 10;">
+                <div class="btn btn1"><a class="except" target="_blank" href="https://app.uphint.com/guide/f4b66980-4eff-41c1-a71c-a5a523491d0b?embed=true">Ver Más</a></div>
+                <iframe src="https://app.uphint.com/guide/f4b66980-4eff-41c1-a71c-a5a523491d0b?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>            
+            </span>
+            <span href="" style="text-decoration: none; z-index: 10;">
+                <div class="btn btn1"><a class="except" target="_blank" href="https://app.uphint.com/guide/d6983492-dc23-4286-8511-3efd2eed1b6a?embed=true">Ver Más</a></div>
+                <iframe src="https://app.uphint.com/guide/d6983492-dc23-4286-8511-3efd2eed1b6a?embed=true" width="100%" height="640" allowfullscreen frameborder="0" allow="clipboard-write *"></iframe>            
+            </span>
+            <br>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block footbox %}
+{% endblock %}

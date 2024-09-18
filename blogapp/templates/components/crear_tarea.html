@@ -1,0 +1,35 @@
+{% extends "blogapp/index.html" %}
+{% block fecha %}
+
+{% endblock %}
+{% block filtrado %}
+
+{% endblock %}
+{% block headbox %}
+<h6 class="text-center display-4 m-0 font-weight-bold text-primary">Crear Tareas</h6>
+{% endblock %}
+
+{% block contenido %}
+
+<div style="height: 43em; overflow: auto;">
+<main class="container "style="margin-top: 2em;">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <form action="/tareas/crear/" method="post" class="card card-body">
+                {% csrf_token %}
+            
+                {{form}}
+            
+                <button class="btn btn-primary">
+                    Guardar
+                </button>
+            
+            </form>
+        </div>
+    </div>
+</main>
+</div>
+{% endblock %}
+{% block footbox %}
+
+{% endblock %}

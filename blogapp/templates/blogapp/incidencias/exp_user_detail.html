@@ -1,0 +1,250 @@
+{% extends 'blogapp/index.html' %}
+
+{% block headbox %} 
+<div style="display: flex; justify-content: space-between; width: 100%;">
+  <p>{{user.apellido}}, {{user.nombre}} Id: {{user.id}} </p>
+  
+  <div style="display: flex;">
+    <form action="{% url 'crearparte' user.id %}" method="get">
+      <button class="btn btn-danger">
+        Nuevo Parte <i class='bx bxs-tired' ></i>
+      </button>
+    </form>
+    <form action="{% url 'crearincidencia' user.id %}" method="get" style="margin-left: 10px;">
+      <button class="btn btn-primary">
+        Nueva Incidencia <i class='bx bx-file'></i>
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block fecha %}
+{% if request.user.is_superuser %}
+<a href="{% url 'expedientes' %}" class="btn btn-primary">Volver</a>
+{% else %}
+<a href="{% url 'misExpedientes' %}" class="btn btn-primary">Volver</a>
+{% endif %}
+{% endblock %}
+
+
+
+{% block filtrado %}
+
+{% endblock %}
+
+{% block contenido %}
+
+
+<div class="d-flex flex-row" style="width: 95%; margin: auto;">
+     <div class="table-responsive" style="height: 45em; transition: 0.5s ease;" id="partes">
+        <div style="display: flex; ">
+          <h2>Partes {{partes|length}}</h2>
+          <div style="margin-left: 20px;">
+            <span href="#" onclick="expandirPartes()" class="btn btn-dark"><i class='bx bx-expand-horizontal'></i></span>
+            <span href="#" onclick="contraerPartes()" class="btn btn-dark"><i class='bx bx-collapse-horizontal' ></i></span>
+          </div>
+        </div>
+        <table class="table table-bordered" id="usuarios">
+            <thead>
+                <tr>
+                    <th>Ver</th>
+                    <th>Creador</th>
+                    <th>Fecha</th>
+                    <th>Comentario</th>
+                    <th>Editar</th>
+                    <th>Borrar</th>
+                </tr>
+                
+            </thead>
+            <tbody>
+                {% for parte in partes %}
+                <tr>
+                    <td>
+                      <form action="{% url 'viewParte' parte.id %}" method="get">
+                        <button class="btn btn-info">
+                          <i class="fa-solid fa-eye"></i>
+                        </button>
+                      </form>
+                    </td>
+                    <td>{{parte.creador}}</td>
+                    <td>{{parte.fecha_reporte}}</td>
+                    <td>{{parte.observacion}}</td>
+                    <td>
+                      <form action="{% url 'updateparte' parte.id %}" method="get">
+                        <button class="btn btn-primary">
+                          <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                      </form>
+                    </td>
+                    <td>
+                      <form action="{% url 'deleteparte' parte.id %}" method="get">
+                        <button class="btn btn-danger">
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+     <br>
+        <!-- <div style="margin: 0% 39% 0 39%; display: flex; background-color: orange; align-items: center; width: 10%;">
+          <form action="{% url 'crearparte' user.id %}" method="get">
+            <button class="btn btn-danger">
+              Parte
+            </button>
+          </form>
+          <form action="{% url 'crearincidencia' user.id %}" method="get" style="margin-left: 10px;">
+            <button class="btn btn-primary">
+              Incidencia
+            </button>
+          </form>
+        </div> -->
+      <br>
+    <div class="table-responsive" style="height: 45em; margin-left: 10px; transition: 0.5s ease;" id="incidencias">
+        <div style="display: flex; ">
+          <h2>Incidencias {{incidencias|length}}</h2>
+          <div style="margin-left: 20px;">
+            <span href="#" onclick="expandirIncidencias()" class="btn btn-dark"><i class='bx bx-expand-horizontal'></i></span>
+            <span href="#" onclick="contraerIncidencias()" class="btn btn-dark"><i class='bx bx-collapse-horizontal' ></i></span>
+          </div>
+        </div>
+        <table class="table table-bordered" id="usuarios">
+          <thead>
+              <tr>
+                  <th>Ver</th>
+                  <th>Creador</th>
+                  <th>Fecha</th>
+                  <th>Comentario</th>
+                  <th>Editar</th>
+                  <th>Borrar</th>
+              </tr>
+              
+          </thead>
+          <tbody>
+            {% for incidencia in incidencias %}
+            <tr>
+              <td>
+                <form action="{% url 'viewIncidencia' incidencia.id %}" method="get">
+                  <button class="btn btn-info">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                </form>
+              </td>
+                <td>{{incidencia.creador}}</td>
+                <td>{{incidencia.fecha_reporte}}</td>
+                <td>{{incidencia.observaciones}}</td>
+                <td>
+                  <form action="{% url 'updateincidencia' incidencia.id %}" method="get">
+                    <button class="btn btn-primary">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                  </form>
+                </td>
+                <td>
+                  <form action="{% url 'deleteincidencia' incidencia.id %}" method="get">
+                    <button class="btn btn-danger">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </form>
+                </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  let expandirPartes = () => {
+    var incidencias = document.getElementById("incidencias")
+    incidencias.style.width = "0px";
+    incidencias.style.opacity = 0;
+  }
+  let expandirIncidencias = () => {
+    var partes = document.getElementById("partes")
+    partes.style.width = "0px";
+    partes.style.opacity = 0;
+  }
+  let contraerPartes = () => {
+    var incidencias = document.getElementById("incidencias")
+    incidencias.style.width = null;
+    incidencias.style.opacity = null;
+  }
+  let contraerIncidencias = () => {
+    var partes = document.getElementById("partes")
+    partes.style.width = null;
+    partes.style.opacity = null;
+  }
+
+    let permutar = () => {
+        var table = document.getElementById('usuariosSeleccionados');
+        var rows = table.rows;
+        var conjunto_lista = [];
+        for (var i = 1; i < rows.length; i++) { // i = 1 para omitir la cabecera
+            var listaContentFila = [];
+            for (var a = 0; a < rows[i].cells.length; a++) { 
+                listaContentFila.push(rows[i].cells[a].textContent);
+            }
+            conjunto_lista.push(listaContentFila);
+        }
+        var csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value; // Obtener el token CSRF desde el formulario
+        
+        console.log(conjunto_lista)
+          var fecha_inicio = document.getElementById("fecha_inicio").value
+          var fecha_fin = document.getElementById("fecha_fin").value
+
+          var dateini = new Date(fecha_inicio);
+          var datefin = new Date(fecha_fin);
+          
+          if (dateini <= datefin){
+            if (conjunto_lista.length > 1){
+              reset()
+              // Crear el objeto de datos a enviar
+              var datos = {
+                csrfmiddlewaretoken: csrftoken,
+                lista: conjunto_lista,
+                fecha_inicio: fecha_inicio,
+                fecha_fin: fecha_fin
+              };
+              // Realizar la solicitud fetch
+              fetch('/permutar/', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify(datos) // Convertir los datos a JSON
+              })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Error en la solicitud fetch');
+                }
+                
+                // Redirigir a una nueva página HTML después de una solicitud exitosa
+                window.location.href = '/dashboard/';
+              })
+              .catch(function(error) {
+                // Manejar errores
+                console.error('Hubo un problema con la solicitud fetch:', error);
+              });
+            }else{
+              alert("Seleccione dos usuarios para aplicar la permuta")
+            }
+          } else{
+            alert("¡Aviso! La fecha inicio debe ser inferior a la fecha final para que los datos sean correctos")
+          }
+        
+    }
+</script>
+
+
+
+
+{% endblock %}
+
+
+

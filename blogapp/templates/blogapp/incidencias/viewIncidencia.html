@@ -1,0 +1,415 @@
+{% extends 'blogapp/index.html' %}
+
+{% block headbox %}<a href="{% url 'user_detail_expediente' user.id %}" class="btn btn-primary">Volver</a>{% endblock %}
+{% block fecha %}{% endblock %}
+{% block filtrado %}{% endblock %}
+{% block head %}
+    <style>
+.wrapper
+{
+    width: 1000px;
+    height: 1150px;
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 20);
+    color: black;
+    border-radius: 20px;
+    padding: 30px 100px;
+    margin: 20px auto 20px auto;
+    animation: myAnimation 0.5s forwards, opcityAnimation 1.5s forwards;
+    animation-play-state: running;
+    overflow: auto;
+    opacity: 0;
+}
+
+@keyframes myAnimation {
+  0% { 
+    width: 0%;
+    border-bottom: 1px solid rgba(163, 163, 163, 0.322);
+    box-shadow: 0 0px 15px black; 
+    }
+  100% {
+    border-bottom: 1px solid rgba(163, 163, 163, 0.322);
+    box-shadow: 0 0px 15px black;
+    }
+}
+
+@keyframes opcityAnimation {
+    0% {
+        opacity: 0;
+    }
+    100%{
+        opacity: 1; 
+    }
+}
+
+@keyframes borderAnimate {
+  0% { 
+    height: 0%;
+    opacity: 0;
+    }
+  100% {
+    height: 100%;
+    box-shadow: 0 10px 30px 2px black; }
+}
+
+.wrapper::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0px;
+    width: 1px;
+    height: 0;
+    background-color: rgba(0, 0, 0, 0.342);
+    
+    animation: borderAnimate 5s forwards;
+    animation-play-state: running;
+}
+.wrapper::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0px;
+    width: 1px;
+    height: 0;
+    background-color: rgba(0, 0, 0, 0.342);
+    
+    animation: borderAnimate 5s forwards;
+    animation-play-state: running;
+}
+
+
+.wrapper h1
+{
+    font-size: 36px;
+    text-align: left;
+}
+.wrapper .input-box
+{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin-top: 50px;
+}
+
+.input-box input
+{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    outline: none;
+    border: 2px solid rgba(163, 163, 163, 0.322);
+    border-radius: 40px;
+    font-size: 16px;
+    color: black;
+    padding: 20px 45px 20px 20px;
+}
+
+
+
+.campos::before{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 6%;
+    top: 65%;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+    animation: myAnimation 0.5s forwards;
+    animation-play-state: running;
+}
+.campos::after{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 5%;
+    bottom: -62%;
+    animation: myAnimation 0.5s forwards;
+    animation-play-state: running;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+}
+
+
+
+
+.campos1::before{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 6%;
+    top: 65%;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+    animation: myAnimation 1s forwards;
+    animation-play-state: running;
+}
+.campos1::after{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 5%;
+    bottom: -62%;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+    animation: myAnimation 1s forwards;
+    animation-play-state: running;
+}
+
+
+.campos2::before{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 6%;
+    top: 65%;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+    animation: myAnimation 1.5s forwards;
+    animation-play-state: running;
+}
+.campos2::after{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 5%;
+    bottom: -62%;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+    animation: myAnimation 1.5s forwards;
+    animation-play-state: running;
+}
+
+
+
+.input-box i
+{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+
+.wrapper .remember-forgot
+{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+}
+.remember-forgot label input
+{
+    accent-color: #fff;
+    margin-right: 3px;
+}
+.remember-forgot a
+{
+    color: #fff;
+    text-decoration: none;
+}
+.remember-forgot a:hover
+{
+    text-decoration: underline;
+}
+.wrapper .btn
+{
+    width: 50%;
+    height: 45px;
+    background: white;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: black;
+    font-weight: 600;
+}
+.wrapper .btn:hover{
+    background-color: black;
+    border: solid 1px white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 40);
+    color: white;
+}
+.wrapper .register-link
+{
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+.register-link p a
+{
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+.register-link p a:hover
+{
+    text-decoration: underline;
+
+}
+.caja1{
+    z-index: 3;
+}
+.caja2{
+    z-index: 2;
+}
+.caja3{
+    z-index: 1;
+}
+
+textarea{
+    max-height: 100px;
+    min-height: 100px;
+}
+label{
+    margin-left: 15px;
+    color: black;
+}
+.fecha{
+    position: absolute;
+    right: 20px;
+    top: -30px;
+    width: 25%;
+}
+.input-box .bx{
+    margin-top: 30px;
+}
+
+.btnDisenio{
+    position: relative;
+    display: inline-block;
+    padding: 10px 30px;
+    background: #363636;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 1px;
+    overflow: hidden;
+    border-radius: 3px;
+}
+.btnDisenio:hover span{
+    color: #fff;
+}
+.btnDisenio:hover{
+    text-decoration: none;
+}
+
+.btnDisenio span
+{
+    position: relative;
+    z-index: 1;
+}
+.btnDisenio::before
+{
+    content: '';
+    position: absolute;
+    top: -80%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    background: #2196f3;
+    transition: width 0.5s, height 0.5s;
+}
+
+.btnDisenio:hover::before
+{
+    width: 300px;
+    height: 300px;
+    
+}
+
+</style>
+{% endblock %}
+{% block contenido %}
+
+<div>
+    <div class="wrapper">
+        <div class="fecha">
+            <div class="input-box">
+                <label style="margin-left: 10px;">Fecha Reporte</label>
+                <input class="border rounded-4" type="datetime-local" name="fechaReporte" value="{{ incidencia.fecha_reporte }}" readonly>
+            </div>
+        </div>
+        <h1>Incidencia : {{user.nombre}}</h1>
+        <a href="{{ incidencia.imagen.url }}" target="_blank" class="btnDisenio except">
+            <span>Ver Imagen</span>
+        </a>
+            <br>
+            <div style="display: flex;">
+                <div class="input-box">
+                    <label style="margin-left: 10px;">Fecha Incidencia</label>
+                    <input class="border rounded-4" type="datetime-local" name="fechaIncidencia" value="{{ incidencia.fecha_incidencia }}" readonly>
+                </div>
+                <div class="input-box campos">
+                    <label>Referencia del Artículo</label>
+                    <input type="number" name="referenciaArticulo" value="{{incidencia.referencia_articulo}}"  readonly>
+                </div>
+                <div class="input-box campos">
+                    <label>Nombre del Artículo</label>
+                    <input type="text" name="nombreArticulo" required value="{{incidencia.nombre_articulo}}" readonly>
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div class="input-box campos">
+                    <label>Número de pedido</label>
+                    <input type="number" name="numeroPedido" required  value="{{incidencia.numero_pedido}}" readonly>
+                </div>
+                <div class="input-box campos">
+                    <label>Unidades totales pedido</label>
+                    <input type="number" name="unidadesTotales" required  value="{{incidencia.unidades_totales_pedido}}" readonly>
+                </div>
+                <div class="input-box campos">
+                    <label>Unidades mal marcadas</label>
+                    <input type="number" name="unidadesMalMarcadas" required  value="{{incidencia.unidades_mal_marcadas_revisadas}}" readonly>
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div class="input-box campos">
+                    <label>Responsable de turno</label>
+                    <input type="text" name="responsableTurno" required  value="{{incidencia.responsable_turno}}" readonly>
+                </div>
+                <div class="input-box">
+                    <label style="margin-left: 10px;">Técnica de marcado</label>
+                    <input type="text" name="responsableTurno" required  value="{{incidencia.tecnica_marcado}}" readonly>
+                </div>
+                <div class="input-box campos">
+                    <label>Coste de incidencia</label>
+                    <input type="number" name="costeIncidencia" required  value="{{incidencia.coste_incidencia}}" readonly>
+                    <i class='bx bx-euro' ></i>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="input-box caja1">
+                <label>Personas implicadas</label>
+                <textarea class="form-control" name="personasImplicadas" readonly>{{incidencia.personas_implicadas}}</textarea>
+            </div>
+            <br>
+            <br>
+            <div class="input-box caja2">
+                <label>Persona quien detecta el error</label>
+                <textarea class="form-control" name="personaDetectaError" readonly>{{incidencia.persona_quien_detecta_error}}</textarea>
+            </div>
+            <br>
+            <br>
+            <div class="input-box caja3">
+                <label>Testigos</label>
+                <textarea class="form-control" name="testigos" readonly>{{incidencia.testigos}}</textarea>
+            </div>
+            <br>
+            <br>
+            <div class="input-box caja4">
+                <label>Observaciones</label>
+                <textarea class="form-control" name="observaciones" readonly>{{incidencia.observaciones}}</textarea>
+            </div>
+            <br>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block footbox %}{% endblock %}

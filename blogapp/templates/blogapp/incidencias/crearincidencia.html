@@ -1,0 +1,370 @@
+{% extends 'blogapp/index.html' %}
+
+{% block headbox %}
+    {% if request.user.is_superuser %}
+    <a href="{% url 'user_detail_expediente' user.id %}" class="btn btn-primary">Volver</a>
+    {% else %}
+    <a href="{% url 'expedientes' %}" class="btn btn-primary">Volver</a>
+    {% endif %}
+{% endblock %}
+{% block fecha %}{% endblock %}
+{% block filtrado %}{% endblock %}
+{% block head %}
+    <style>
+.wrapper
+{
+    width: 1000px;
+    background-color: transparent;
+    border: 2px solid rgba(255,255,255,.2);
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 20);
+    color: black;
+    border-radius: 10px;
+    padding: 30px 40px;
+    margin: 20px auto 20px auto;
+    transition: 0.5s;
+    animation: animatedWraper 2s forwards;
+    animation-play-state: running;
+    opacity: 0;
+}
+@keyframes animatedWraper {
+  0% { 
+    border-bottom: 1px solid rgba(163, 163, 163, 0.322);
+    box-shadow: 0 0px 15px black; 
+}
+  100% {
+    border-bottom: 1px solid rgba(163, 163, 163, 0.322);
+    box-shadow: 0 0px 15px black;
+    opacity: 1;
+}
+    
+}
+
+
+.wrapper h1
+{
+    font-size: 36px;
+    text-align: left;
+}
+.wrapper .input-box
+{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin-top: 50px;
+}
+
+.input-box input
+{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    outline: none;
+    border: 2px solid rgba(163, 163, 163, 0.322);
+    border-radius: 40px;
+    font-size: 16px;
+    color: black;
+    padding: 20px 45px 20px 20px;
+}
+
+@keyframes myAnimation {
+  0% { 
+    width: 0%;
+    border-bottom: 1px solid rgba(163, 163, 163, 0.322);
+    box-shadow: 0 0px 15px black; }
+  100% {
+    width: 80%;
+    border-bottom: 1px solid rgba(163, 163, 163, 0.322);
+    box-shadow: 0 0px 15px black; }
+}
+
+.campos::before{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 10%;
+    top: 65%;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+    animation: myAnimation 3s forwards;
+    animation-play-state: running;
+}
+.campos::after{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 10%;
+    bottom: -62%;
+    animation: myAnimation 3s forwards;
+    animation-play-state: running;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+}
+
+
+
+.campos1::before{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 10%;
+    top: 65%;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+    animation: myAnimation 3.5s forwards;
+    animation-play-state: running;
+}
+.campos1::after{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 10%;
+    bottom: -62%;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+    animation: myAnimation 3.5s forwards;
+    animation-play-state: running;
+}
+
+
+.campos2::before{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 10%;
+    top: 65%;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+    animation: myAnimation 4s forwards;
+    animation-play-state: running;
+}
+.campos2::after{
+    content: '';
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 10%;
+    bottom: -62%;
+    /* border-bottom: rgba(163, 163, 163, 0.322); */
+    animation: myAnimation 4s forwards;
+    animation-play-state: running;
+}
+
+
+
+.input-box i
+{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+
+.wrapper .remember-forgot
+{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+}
+.remember-forgot label input
+{
+    accent-color: #fff;
+    margin-right: 3px;
+}
+.remember-forgot a
+{
+    color: #fff;
+    text-decoration: none;
+}
+.remember-forgot a:hover
+{
+    text-decoration: underline;
+}
+.wrapper .btn
+{
+    width: 25%;
+    height: 45px;
+    background: white;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: black;
+    font-weight: 600;
+}
+.wrapper .btn:hover{
+    background-color: black;
+    border: solid 1px white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 40);
+    color: white;
+}
+.wrapper .register-link
+{
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+.register-link p a
+{
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+.register-link p a:hover
+{
+    text-decoration: underline;
+
+}
+
+label{
+    margin-left: 15px;
+    color: black;
+}
+/* .fecha{
+    position: absolute;
+    right: 30px;
+    top: -30px;
+    width: 30%;
+} */
+
+.caja1{
+    z-index: 4;
+}
+.caja2{
+    z-index: 3;
+}
+.caja3{
+    z-index: 2;
+}
+.caja4{
+    z-index: 1;
+}
+.fecha input{
+    color: black;
+}
+.fecha{
+    display: flex;
+}
+textarea{
+    min-height: 63px;
+}
+.input-box .bx{
+    margin-top: 30px;
+}
+
+</style>
+{% endblock %}
+{% block contenido %}
+
+<div>
+    <div class="wrapper">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>Incidencia : {{user.nombre}}</h1>
+            <p style="color:red; text-align: center;  transform: translateY(50%);">
+                {{error}}
+            </p>
+            <!-- <div class="input-box campos">
+                
+                <i class='bx bxs-user-circle' ></i>
+            </div> -->
+            <div class="input-box fecha">
+                <div>
+                    <label style="margin-left: 10px;">Fecha Incidencia</label>
+                    <input class="border rounded-4" type="datetime-local" name="fechaIncidencia" value="{{ fecha_modificada }}" min="{{ minValue }}">
+                </div>
+                <div>
+                    <label style="margin-left: 10px;">Fecha Reporte</label>
+                    <input class="border rounded-4" type="datetime-local" name="fechaReporte" value="{{ fecha_modificada }}" min="{{ minValue }}">
+                </div>
+            </div>
+            <br>
+            <div style="display: flex;">
+                <div class="input-box campos">
+                    <label>Referencia del Artículo</label>
+                    <input type="number" name="referenciaArticulo"  required  id="myInput" min="0">
+                </div>
+                <div class="input-box campos">
+                    <label>Nombre del Artículo</label>
+                    <input type="text" name="nombreArticulo" required>
+                </div>
+                <div class="input-box campos">
+                    <label>Número de pedido</label>
+                    <input type="number" name="numeroPedido" required  id="myInput" min="0">
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div class="input-box campos">
+                    <label>Unidades totales pedido</label>
+                    <input type="number" name="unidadesTotales" required  id="myInput" min="0">
+                </div>
+                <div class="input-box campos">
+                    <label>Unidades mal marcadas</label>
+                    <input type="number" name="unidadesMalMarcadas" required  id="myInput" min="0">
+                </div>
+                <div class="input-box campos">
+                    <label>Coste de incidencia</label>
+                    <input type="number" name="costeIncidencia" required  id="myInput" min="0">
+                    <i class='bx bx-euro' ></i>
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div class="input-box campos">
+                    <label>Responsable de turno</label>
+                    <input type="text" name="responsableTurno" required  id="myInput">
+                </div>
+                <div class="input-box" style="margin-left: 10px;">
+                    <label style="margin-left: 10px;">Técnica de marcado</label>
+                    <select class="form-control" name="maquina">
+                        <option value="AUTOS" {% if user.maquina == 'autos' %} selected {% endif %}>Autos</option>
+                        <option value="LASER" {% if user.maquina == 'laser' %} selected {% endif %}>Laser</option>
+                        <option value="TAMPOS" {% if user.maquina == 'tampo' %} selected {% endif %}>Tampografía</option>
+                        <option value="PULPOS" {% if user.maquina == 'pulpos' %} selected {% endif %}>Pulpos</option>
+                        <option value="DIGITAL" {% if user.maquina == 'digital' %} selected {% endif %}>Digital</option>
+                        <option value="BORDADO" {% if user.maquina == 'bordado' %} selected {% endif %}>Bordado</option>
+                        <option value="TERMOS" {% if user.maquina == 'termo' %} selected {% endif %}>Termo</option>
+                        <option value="PLANCHAS" {% if user.maquina == 'planchas' %} selected {% endif %}>Planchas</option>
+                        <option value="SUBLIMACIÓN" {% if user.maquina == 'sublimacion' %} selected {% endif %}>Sublimación</option>
+                        <option value="ENVASADO/MANIPULACIÓN" {% if user.maquina == 'otros' %} selected {% endif %}>Envasado y manipulación</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-box caja1">
+                <label>Personas implicadas</label>
+                <textarea class="form-control" name="personasImplicadas" ></textarea>
+            </div>
+            <div class="input-box caja2">
+                <label>Persona quien detecta el error</label>
+                <textarea class="form-control" name="personaDetectaError" ></textarea>
+            </div>
+            <div class="input-box caja3">
+                <label>Testigos</label>
+                <textarea class="form-control" name="testigos" ></textarea>
+            </div>
+            <div class="input-box caja4">
+                <label>Observaciones</label>
+                <textarea class="form-control" name="observaciones" ></textarea>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div style="display: flex; flex-direction: column;">
+                <label>Subir imagen</label>
+                <input type="file" name="imagen" accept="image/*" required>
+            </div>
+            <br>
+            <button style="margin-top: 50px;" type="submit" class="btn">Enviar <i class="fa-solid fa-paper-plane"></i></button>
+            
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block footbox %}{% endblock %}

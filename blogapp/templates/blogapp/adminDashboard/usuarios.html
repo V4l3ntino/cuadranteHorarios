@@ -1,0 +1,63 @@
+{% extends 'blogapp/index.html' %} 
+{% block fecha %}{% endblock %}
+
+{% block headbox %}
+    Usuarios de la aplicación
+{% endblock %}
+
+{% block formulario %}
+<form method="POST"
+  class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+>
+{% csrf_token %}
+  <div class="input-group">
+    <input
+      type="text"
+      name="search"
+      class="form-control bg-light border-0 small"
+      placeholder="Buscar..."
+      aria-label="Search"
+      aria-describedby="basic-addon2"
+      value="{{ request.POST.search }}"
+    />
+    <div class="input-group-append">
+      <button class="btn btn-dark" style="background-color: #294ee5;" type="submit">
+        <i class="fas fa-search fa-sm"></i>
+      </button>
+    </div>
+  </div>
+
+</form> 
+<a href="{% url 'appcreate' %}" class="btn btn-dark">Crear usuario <i class='bx bxs-user-circle' ></i></a>
+
+{% endblock %}
+
+{% block contenido %}
+
+
+<div class="table-responsive" style="height: 46em;">
+    <table class="table table-bordered" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th style="text-align: center;">Activo</th>
+                <th>Permisos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr onclick="window.location.href='{% url 'appdetalle' user.id %}';" style="cursor: pointer;">
+                <td>{{user.id}}</td>
+                <td>{{user.username}}</td>
+                <td style="text-align: center; font-size: 30px;">{% if user.is_active %}<i class='bx bxs-check-square'></i>{% elif not user.is_active %}<i class='bx bxs-checkbox-minus' ></i>{% endif %}</td>
+                <td>{% if user.is_superuser and user.is_staff %} Administrador {% elif user.is_superuser and not user.is_staff %} Usuario con privilegios {% elif not user.is_superuser and not user.is_staff %} Usuario sin privilegios {% endif %}</td>
+                <td><form action="{% url 'appdelete' user.id %}" method="POST">{% csrf_token %}<button class="btn btn-danger">DELETE</button></form></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

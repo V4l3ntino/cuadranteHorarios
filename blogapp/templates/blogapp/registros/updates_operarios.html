@@ -1,0 +1,58 @@
+{% extends 'blogapp/index.html' %} 
+{% block filtrado %}{% endblock %}
+{% block fecha %}{% endblock %}
+
+{% block headbox %}Seguimiento de todos los usuarios que utilizan el programa <i class="fa-solid fa-glasses"></i>{% endblock %}
+
+
+
+{% block contenido %}
+
+
+<div class="table-responsive" style="height: 46em;">
+    <table class="table table-bordered" width="100%" cellspacing="0">
+        <thead>
+            
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th colspan="2">Maquina</th>
+                <th colspan="2">Conocimiento</th>
+                <th colspan="2">Jornada</th>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Fecha</th>
+                <th>Comentario</th>
+                <th>Antes</th>
+                <th>Después</th>
+                <th>Antes</th>
+                <th>Después</th>
+                <th>Antes</th>
+                <th>Después</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in lista|dictsortreversed:"id" %}
+            <tr style="cursor: pointer;">
+                <td>{{user.id_request}}</td>
+                <td>{{user.nombre}}</td>
+                <td>{{user.fecha}}</td>
+                <td>{{user.log}}</td>
+                <td>{{user.movimientos.0.Maquina.0}}</td>
+                <td>{{user.movimientos.0.Maquina.1}}</td>
+                <td>{{user.movimientos.2.Conocimiento.0}}</td>
+                <td>{{user.movimientos.2.Conocimiento.1}}</td>
+                <td>{{user.movimientos.1.Turno.0}}</td>
+                <td>{{user.movimientos.1.Turno.1}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+

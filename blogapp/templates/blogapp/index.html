@@ -1,0 +1,1482 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Makitime</title>
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.css" integrity="sha512-Z0kTB03S7BU+JFU0nw9mjSBcRnZm2Bvm0tzOX9/OuOuz01XQfOpa0w/N9u6Jf2f1OAdegdIPWZ9nIZZ+keEvBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom fonts for this template-->
+    <link
+      href="{% static 'vendor/fontawesome-free/css/all.min.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+
+    {% block head %}{% endblock%}
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet" >
+    <style>
+      tr:hover{
+        background-color: #cfcdcd98;
+      }
+
+      #id{
+        position: sticky;
+        left: 0;
+      }
+      #nombre{
+        position: sticky;
+      }
+      .sticky-column {
+        position: sticky;
+        z-index: 100;
+        left: -1px;
+        background-color: #ffffff;
+        font-weight: bold;
+        color: black;
+    }
+
+    .sticky-column-2 {
+      position: sticky;
+        z-index: 100;
+        min-width: 150px;
+        max-width: 150px;
+        left: 40px; /* Ancho de la primera columna pegajosa */
+        background-color: #ffffff;
+        font-weight: bold;
+        color: black;
+
+
+    }
+      .sticky-column-3 {
+        position: sticky;
+        z-index: 100;
+        left: 185px;
+        background-color: #ffffff;
+        font-weight: bold;
+        color: black;
+    }
+
+    .sticky-column-4 {
+      position: sticky;
+        z-index: 100;
+        left: 0px; /* Ancho de la primera columna pegajosa */
+        background-color: #ffffff;
+        font-weight: bold;
+        color: black;
+    }
+    .sticky-column-top{
+      position: sticky;
+      top: -1px;
+      background-color: #ffffff;
+      font-weight: bold;
+      color: black;
+    }
+    .sticky-column-top1{
+      position: sticky;
+      top: 40px;
+      background-color: #ffffff;
+      font-weight: bold;
+      color: black;
+    }
+    .sticky-column-top2{
+      position: sticky;
+      top: 80px;
+      background-color: #ffffff;
+      font-weight: bold;
+      color: black;
+    }
+    .sticky-column-top3{
+      position: sticky;
+      z-index: 101;
+      top: 80px;
+      background-color: #ffffff;
+      font-weight: bold;
+      color: black;
+    }
+    .sticky-column-top4{
+      position: sticky;
+      z-index: 101;
+      left: -1px;
+      top: 0px;
+      background-color: #ffffff;
+      font-weight: bold;
+      color: black;
+    }
+    .sticky-column-top5{
+      position: sticky;
+      z-index: 101;
+      left: -1px;
+      top: 40px;
+      background-color: #ffffff;
+      font-weight: bold;
+      color: black;
+    }
+    .loader{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200vh;
+      display: flex;
+      justify-content: center;
+      background-color: #f7f9fb;
+      transition: opacity 0.75s, visibility 0.75s;
+      z-index: 800;
+    }
+    .loader-hidden{
+      opacity: 0;
+      height: 0vh;
+      visibility: hidden;
+    }
+
+    .loader::after{
+      content: "";
+      width: 125px;
+      height: 125px;
+      border: 15px solid #dddddd;
+      border-top-color: rgba(172, 172, 172, 0.932);
+      border-radius: 50%;
+      top: 25em;
+      left: 50em;
+      position: absolute;
+      animation: loading 0.75s ease infinite;
+    }
+    .blocked{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200vh;
+      display: flex;
+      justify-content: center;
+      background-color: #f7f9fb;
+      z-index: 802;
+    }
+    .blocked-hidden{
+      opacity: 0;
+      height: 0vh;
+      visibility: hidden;
+      transition: opacity 0.75s, visibility 0.75s;
+    }
+    .pantalla{
+      position: absolute; width: 100%; height: 200vh; cursor: default; z-index: 801; background-color: transparent; backdrop-filter: blur(20px);
+    }
+    .pantalla-hidden{
+      display: none;
+    }
+    @keyframes loading {
+      from{
+        transform: rotate(0turn);
+      }
+      to{
+        transform: rotate(1turn);
+      }
+    }
+
+    #botones input{
+      width: 50%; border: none; outline: none; background-color: transparent; color: #294ee5; font-weight: bold; margin-left: 5px;
+    }
+    #botones p{
+      transform: translateY(8px);
+    }
+    #botones form{
+      display: flex;
+    }
+    #botones button{
+      border-radius: 50%; margin-left: 5px; transform: translateY(5px); height: 25px; width: 20px; display: flex; justify-content: center;
+    }
+    #botones i{
+      font-size: 13px;
+    }
+    .menuEstiloNormal{
+      z-index: 1000;
+      transition: 0.2s;
+      background: linear-gradient(180deg,#1837b3  60%, #42d392);
+    }
+    .menuEstiloBloqueado{
+      z-index: 1000;
+      transition: 0.2s;
+      background: linear-gradient(300deg,#1837b3  5%, #42d392);
+    }
+    .botonazo{
+      background-color: #647eff;
+    }
+    </style>
+        <script>
+          let contador = () => {
+        let timeInactivity = 120;
+        console.log(timeInactivity)
+        timeDelay()
+
+        function timeDelay(){
+          const countDown = setInterval (() => {
+          timeInactivity --;
+          console.log(timeInactivity)
+          if (timeInactivity == 0){
+          window.location.reload()
+        }
+        }, 1000);
+        }
+      }
+      window.onload = function() {
+          const ruta = window.location.href.split('/')
+          if (ruta[ruta.length-2] != "ayuda"){
+            contador();
+          }
+        };
+
+        window.addEventListener("load", () => {
+          const loader = document.querySelector(".loader");
+          loader.classList.add("loader-hidden");
+          const estadoBoton = localStorage.getItem("botonEstado");
+          const boton = document.getElementById("blocked")
+          const pantalla = document.querySelector(".pantalla")
+          const wrapper = document.getElementById("body");
+          const topbar = document.getElementById("barratop");
+          const sidebar = document.getElementById("sidebarMenu");
+          const sidebarPadre = document.getElementById("accordionSidebar");
+          const cuerpo = document.getElementById("content-wrapper")
+          if (estadoBoton === "activo") {
+            boton.classList.add("blocked");
+            boton.classList.remove("blocked-hidden");
+            wrapper.remove();
+            topbar.style.display = "none";
+            sidebar.style.pointerEvents = "none";
+            sidebarPadre.classList.add("menuEstiloBloqueado")
+            cuerpo.style.pointerEvents = "none";
+
+            document.addEventListener("keydown", function (event) {
+                if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
+                    event.preventDefault(); 
+                }
+            });
+          } else {
+            boton.classList.add("blocked-hidden");
+            boton.classList.remove("blocked");
+            pantalla.classList.add("pantalla-hidden")
+            pantalla.classList.remove("pantalla")
+          }
+
+          const links = document.querySelectorAll("a");
+          const inputs = document.querySelectorAll("form");
+          links.forEach(link => {
+            if (!link.classList.contains("scroll-to-top", "rounded") && !link.classList.contains("except")){
+              link.addEventListener("click", (event) => {
+              loader.classList.remove("loader-hidden");
+            })
+            }
+          })
+          inputs.forEach(form => {
+            form.addEventListener("submit", (event) => {
+              loader.classList.remove("loader-hidden");
+            })
+          })
+        })
+
+        function bloquear() {
+          const boton = document.getElementById("blocked");
+          const wrapper = document.getElementById("body");
+          const topbar = document.getElementById("barratop");
+          const sidebar = document.getElementById("sidebarMenu");
+          const sidebarPadre = document.getElementById("accordionSidebar");
+          const cuerpo = document.getElementById("content-wrapper");
+          if (boton.classList.contains("blocked")) {
+            // Si está activo (tiene la clase "blocked"), desactívalo
+            const username = document.getElementById("pqwe879a2jkas9").innerHTML
+            const nombre = prompt("Por favor, introduzca su nombre de usuario")
+            const pantalla = document.querySelector(".pantalla")
+            if (nombre == username){
+              localStorage.setItem("botonEstado", "inactivo");
+              window.location.reload()
+            }else{
+              alert("No es correcto, por favor intentalo de nuevo")
+            }
+          } else {
+            // Si está inactivo (tiene la clase "blocked-hidden"), actívalo
+            boton.classList.remove("blocked-hidden");
+            boton.classList.add("blocked");
+            wrapper.remove();
+            localStorage.setItem("botonEstado", "activo");
+            topbar.style.display = "none";
+            sidebar.style.pointerEvents = "none";
+            sidebarPadre.classList.remove("menuEstiloNormal")
+            sidebarPadre.classList.add("menuEstiloBloqueado")
+            cuerpo.style.pointerEvents = "none";
+            document.addEventListener("keydown", function (event) {
+                if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
+                    event.preventDefault(); 
+                }
+            });
+          }
+        }
+        
+
+
+
+      </script>
+  </head>
+
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      {% include 'components/sidebar.html' %}
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <nav id="barratop"
+            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+          >
+            <!-- Sidebar Toggle (Topbar) -->
+            <button
+              id="sidebarToggleTop"
+              class="btn btn-link d-md-none rounded-circle mr-3"
+            >
+              <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Topbar Search -->
+            {% block formulario %}
+            {% block filtrado %}
+            <form method="POST"
+              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+            >
+            {% csrf_token %}
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="search"
+                  class="form-control bg-light border-0 small"
+                  placeholder="Buscar..."
+                  aria-label="Search"
+                  aria-describedby="basic-addon2"
+                  value="{{ request.POST.search }}"
+                />
+                {% block seleccionar %}
+
+                {% endblock %}
+                <div style="display: none;">
+                  <input type="date" name="fecha" value="{{diccionario.fecha_modificada}}">
+                  <select class="form-control" name="turnoFecha">
+                    <option value="Todo" {% if request.POST.turnoFecha == 'Todo' %} selected {% endif %}>Todo</option>
+                    <option value="M" {% if request.POST.turnoFecha == 'M' %} selected {% endif %}>Mañana</option>
+                    <option value="T" {% if request.POST.turnoFecha == 'T' %} selected {% endif %}>Tarde</option>
+                    <option value="N" {% if request.POST.turnoFecha == 'N' %} selected {% endif %}>Noche</option>
+                  </select>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-dark botonazo" type="submit">
+                    <i class="fas fa-search fa-sm"></i>
+                  </button>
+
+
+                </div>
+              </div>
+
+
+            </form>
+
+            {% endblock %}
+            {% block fecha %}
+            <form method="POST">
+              {% csrf_token %}
+              <div class="input-group">
+                <input type="text" name="search" value="{{ request.POST.search }}" style="display: none;">
+                <input class="border rounded-4" type="date" name="fecha" value="{{ diccionario.fecha_modificada }}" min="{{diccionario.minValue}}">
+                <select class="form-control" name="turnoFecha">
+                  <option value="Todo" {% if request.POST.turnoFecha == 'Todo' %} selected {% endif %}>Todo</option>
+                  <option value="M" {% if request.POST.turnoFecha == 'M' %} selected {% endif %}>Mañana</option>
+                  <option value="T" {% if request.POST.turnoFecha == 'T' %} selected {% endif %}>Tarde</option>
+                  <option value="N" {% if request.POST.turnoFecha == 'N' %} selected {% endif %}>Noche</option>
+                  <option value="L" {% if request.POST.turnoFecha == 'L' %} selected {% endif %}>Licencia</option>
+                  <option value="B" {% if request.POST.turnoFecha == 'B' %} selected {% endif %}>Bajas</option>
+                  <option value="V" {% if request.POST.turnoFecha == 'V' %} selected {% endif %}>Vacaciones</option>
+                </select>
+
+              <select class="form-control" name="turno" style="display: none;">
+                <option value="Todo" {% if diccionario.turno == 'Todo' %} selected {% endif %}>Todo</option>
+                <option value="Mañana" {% if diccionario.turno == 'Mañana' %} selected {% endif %}>Mañana</option>
+                <option value="Tarde" {% if diccionario.turno == 'Tarde' %} selected {% endif %}>Tarde</option>
+                <option value="Noche" {% if diccionario.turno == 'Noche' %} selected {% endif %}>Noche</option>
+              </select>
+              <button class="btn btn-dark botonazo" type="submit"><i class="fas fa-search fa-sm"></i></button>
+            </div>
+            </form>
+            {% endblock %}
+
+            {% endblock %}
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+              <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+              <li class="nav-item dropdown no-arrow d-sm-none">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="searchDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-search fa-fw"></i>
+                </a>
+                <!-- Dropdown - Messages -->
+                <div
+                  class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                  aria-labelledby="searchDropdown"
+                >
+
+                  <form class="form-inline mr-auto w-100 navbar-search" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        name="search"
+                        class="form-control bg-light border-0 small"
+                        placeholder="Buscar..."
+                        aria-label="Search"
+                        aria-describedby="basic-addon2"
+                        value="{{ request.POST.search }}"
+                      />
+                      <select class="form-control" name="turno">
+                        <option value="Todo" {% if diccionario.turno == 'Todo' %} selected {% endif %}>Todo</option>
+                        <option value="Mañana" {% if diccionario.turno == 'Mañana' %} selected {% endif %}>Mañana</option>
+                        <option value="Tarde" {% if diccionario.turno == 'Tarde' %} selected {% endif %}>Tarde</option>
+                        <option value="Noche" {% if diccionario.turno == 'Noche' %} selected {% endif %}>Noche</option>
+                      </select>
+                      <div class="input-group-append">
+                        <button class="btn btn-primary botonazo" type="submit">
+                          <i class="fas fa-search fa-sm"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </li>
+
+
+
+              <div class="topbar-divider d-none d-sm-block"></div>
+
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <span
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span class="mr-2 d-none d-lg-inline small"style="color: black; font-size: 20px;"
+                    ><p style="display: none;" id="pqwe879a2jkas9">{{request.user.username}}</p> {% if request.user.is_superuser %}<i class="fa-solid fa-circle-check"></i>{% else %}<i class="fa-solid fa-circle-xmark"></i>{% endif %}</span
+                  >
+                  <img
+                    class="img-profile rounded-circle"
+                    src="{% static 'img/Admin.png' %}"
+                  />
+                </span>
+                <!-- Dropdown - User Information -->
+                <div
+                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="userDropdown"
+                >
+                <!-- OPCIONES ADICIONALES PARA PERSONALIZAR EL PERFIL DEL USUARIO -->
+                  <!-- <a class="dropdown-item" href="#">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Settings
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Activity Log
+                  </a> -->
+                  <a class="dropdown-item" href="{% url 'profile' %}">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Profile
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <span
+                    class="dropdown-item"
+                    href="#"
+                    data-toggle="modal"
+                    data-target="#logoutModal"
+                  >
+                    <i
+                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                    ></i>
+                    Logout
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+
+            <!-- CONTENIDO -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary" style="display: flex; justify-content: space-between;">
+                    {% comment %} {% block headbox %}
+                      {% if "turnos/turnotodo/" in request.path %}
+                        Todos los operarios
+                      {% elif "turnos/turnoautos/" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Autos  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="autos" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="autos" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="autos" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="autos" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Autos  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnolaser/" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Laser  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="laser" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="laser" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="laser" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="laser" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Laser  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnotampo/" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Tampo  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="tampo" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="tampo" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="tampo" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="tampo" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Tampo  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnopulpos/" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Pulpos  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="pulpos" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="pulpos" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="pulpos" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="pulpos" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Pulpos  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnodigital/" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Digital  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="digital" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="digital" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="digital" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="digital" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Digital  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnobordado" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Bordado  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="bordado" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="bordado" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="bordado" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="bordado" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Bordado  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnohornos" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Hornos  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="hornos" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="hornos" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="hornos" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="hornos" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Hornos  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnotermo" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Termo  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="termo" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="termo" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="termo" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="termo" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Termo  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnocosido" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Cosidos  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="cosidos" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="cosidos" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="cosidos" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="cosidos" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Cosidos  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnoplanchas/" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Planchas  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="planchas" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="planchas" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="planchas" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="planchas" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Planchas  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnohorno/" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Horno  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="horno" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="horno" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="horno" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="horno" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Horno  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnosublimacion/" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Sublimacion  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="sublimacion" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="sublimacion" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="sublimacion" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="sublimacion" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Sublimacion  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "turnos/turnoenvasado/" in request.path %}
+                        {% if request.user.is_superuser %}
+                        <div style="display: flex;" id="botones">
+                          <p>Manipulación/Envasado  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="otros" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="otros" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="otros" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="otros" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                        {% else %}
+                          <div>Manipulación/Envasado  <i class="fa-solid fa-child-reaching"></i> {{diccionario.necesarios}}</div>
+                        {% endif %}
+                      {% elif "operarios/sugerencia/" in request.path %}
+                        Operarios disponibles
+                      {% elif "dashboard" in request.path  or request.path == "/" or request.path == "operarios/todo" %}
+                          Dashboard
+                      {% endif %}
+                    {% endblock %}</h6> {% endcomment %}
+                    
+                    {% block headbox %}
+                      {% if "turnos/turnotodo/" in request.path %}
+                        Todos los operarios
+                      {% elif "turnos/turnoautos/" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Autos  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="autos" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="autos" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="autos" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="autos" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnolaser/" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Laser  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="laser" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="laser" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="laser" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="laser" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnotampo/" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Tampo  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="tampo" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="tampo" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="tampo" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="tampo" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnopulpos/" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Pulpos  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="pulpos" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="pulpos" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="pulpos" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="pulpos" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnodigital/" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Digital  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="digital" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="digital" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="digital" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="digital" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnobordado" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Bordado  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="bordado" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="bordado" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="bordado" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="bordado" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnohornos" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Hornos  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="hornos" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="hornos" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="hornos" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="hornos" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnotermo" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Termo  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="termo" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="termo" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="termo" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="termo" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnocosido" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Cosidos  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="cosidos" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="cosidos" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="cosidos" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="cosidos" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnoplanchas/" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Planchas  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="planchas" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="planchas" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="planchas" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="planchas" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnohorno/" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Horno  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="horno" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="horno" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="horno" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="horno" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnosublimacion/" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Sublimacion  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="sublimacion" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="sublimacion" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="sublimacion" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="sublimacion" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "turnos/turnoenvasado/" in request.path %}
+                        <div style="display: flex;" id="botones">
+                          <p>Manipulación/Envasado  <i class="fa-solid fa-child-reaching"></i></p>
+                          <form action="{% url 'actualizar' %}" method="post">{% csrf_token %}<input type="text" value="otros" style="display: none;" name="maquina"><input  type="number" name="valor" value="{{diccionario.necesarios}}" max="999" min="1"><button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button></form>
+                          <form action="{% url 'resetear' %}" method="post">{% csrf_token %}<input type="text" value="otros" style="display: none;" name="maquina"><button class="btn btn-dark" type="submint"><i class="fas fa-redo-alt"></i></button></form>
+                        </div>
+                        <div style="display: flex;" id="botones">
+                          <form action="{% url 'coloresupdate' %}" method="post">{% csrf_token %}
+                            <input type="text" value="otros" style="display: none;" name="maquina"><input class="btn" style="background-color: #1cc88a; color: whitesmoke;" type="number" name="green" value="{{green}}" max="999" min="0">
+                            <input type="text" value="otros" style="display: none;" name="maquina"><input class="btn" style="background-color: #e74a3b; color: whitesmoke;" type="number" name="red" value="{{red}}" max="-1" min="-999">
+                            <button class="btn btn-primary" type="submint"><i class="fa-solid fa-check"></i></button>
+                          </form>
+                        </div>
+                      {% elif "operarios/sugerencia/" in request.path %}
+                        Operarios disponibles
+                      {% elif "dashboard" in request.path  or request.path == "/" or request.path == "operarios/todo" %}
+                          Dashboard
+                      {% endif %}
+                    {% endblock %}</h6> 
+              </div>
+              <div id="loading" class="loader"></div>
+              <div id="blocked" class="blocked-hidden"> 
+                <div style="width:100%;height:0;padding-bottom:100%;position:relative; display: flex; justify-content: center; ">
+                  <!-- <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/MEF8otYAThuOVdbJM3" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div> -->
+                  <!-- <div style="width:100%;height:0;padding-bottom:75%;position:relative;"><iframe src="https://giphy.com/embed/SXBznmdLSWL5Rsz3hX" frameborder="0"></iframe></div> -->
+                  <!-- <div style="width:100%;height:0;padding-bottom:75%;position:relative;"><iframe src="https://giphy.com/embed/l46Cy1rHbQ92uuLXa" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div> -->
+                  <!-- <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/h8RDGogSns9wpOJFzR" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div> -->
+                  <!-- <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/l44Qohad7fiYnfXDG" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div> -->
+                  <!-- <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/yZuOZMlH6weASvw8cf" width="50%" height="50%" style="position:absolute; margin-left: 25%;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div> -->
+                  <!-- <iframe src="https://giphy.com/embed/HvekzBaREHxlEwvlOS" width="419" height="480" style="margin-top: 10%;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe> -->
+                   <iframe src="https://giphy.com/embed/rrB1AynLKIJyqOsRfi" width="600" height="680" style="margin-top: 5%;" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                  <!-- <div style="width:100%;height:0;padding-bottom:100%;position:relative;"><iframe src="https://giphy.com/embed/ksE9feSa2b4V2GYwY4" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div> -->
+                </div>
+                <div style="position: absolute; width: 100%; height: 200vh; cursor: default; z-index: 850;"></div>
+              </div>
+              <div class="pantalla"></div>
+              <div class="card-body" id="body">
+                {% block contenido %}
+                  {% if diccionario|length > 0 %}
+                    {% include 'components/tableturnos.html' %}
+                  {% else %}
+                    {% include 'components/table.html' %}
+                  {% endif %}
+                {% endblock %}
+              </div>
+          </div>
+            <!-- CONTENIDO -->
+
+          </div>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <!-- <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>
+                {% block footbox %}
+                  {% if diccionario.necesarios <= diccionario.userList|length %}
+                    Suficientes
+                  {% else %}
+                    Necesitamos {{ diccionario.diferencia }} más en mañana
+                    Necesitamos {{ diccionario.diferencia1 }} más en tarde
+                    Necesitamos {{ diccionario.diferencia2 }} más en noche
+                  {% endif %}
+                {% endblock %}
+              </span>
+            </div>
+          </div>
+        </footer> -->
+        <!-- End of Footer -->
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" style="z-index: 1000;" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div
+      class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Estas seguro?</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              CANCELAR
+            </button>
+            <a class="btn btn-primary" href="{% url 'logout' %}">SI</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.js' %}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/vanilla-tilt.js'  %}"></script>  
+    <script>
+        VanillaTilt.init(document.querySelectorAll(".cardMove"),{
+        max: 25,
+        speed: 400,
+        glare: true,
+        "max-glare": 1,
+    });
+    </script>
+
+
+    <script>
+      function combinarCeldas() {
+        var table = document.getElementById('dataTable');
+        var rows = table.rows;
+
+        for (var i = 0; i < rows[4].cells.length; i++) {
+            var cellContent = rows[4].cells[i].textContent;
+            var colspanCount = 1;
+
+            // Contar el número de celdas adicionales con el mismo contenido en la misma fila
+            while (i + colspanCount < rows[4].cells.length && rows[4].cells[i + colspanCount].textContent === cellContent) {
+                colspanCount++;
+            }
+
+            // Aplicar colspan a la primera celda coincidente y eliminar las celdas duplicadas restantes
+            if (colspanCount > 1) {
+                rows[4].cells[i].setAttribute('colspan', colspanCount);
+                for (var j = 1; j < colspanCount; j++) {
+                    rows[4].deleteCell(i + 1);
+                }
+            }
+        }
+      }
+      function combinarCeldas2() {
+        var table = document.getElementById('dataTable');
+        var rows = table.rows;
+
+        for (var i = 0; i < rows[3].cells.length; i++) {
+            var cellContent = rows[3].cells[i].textContent;
+            var colspanCount = 1;
+
+            // Contar el número de celdas adicionales con el mismo contenido en la misma fila
+            while (i + colspanCount < rows[3].cells.length && rows[3].cells[i + colspanCount].textContent === cellContent) {
+                colspanCount++;
+            }
+
+            // Aplicar colspan a la primera celda coincidente y eliminar las celdas duplicadas restantes
+            if (colspanCount > 1) {
+                rows[3].cells[i].setAttribute('colspan', colspanCount);
+                for (var j = 1; j < colspanCount; j++) {
+                    rows[3].deleteCell(i + 1);
+                }
+            }
+        }
+      }
+    function contarCeldas() {
+        var table = document.getElementById('dataTable');
+        var rows = table.rows;
+
+        var colores = {{diccionario.colores}}
+
+
+        var conjunto_lista = [];
+        for (var i = 0; i < rows.length; i++) {
+            var listaContentFila = [];
+            for (var a = 0; a < rows[i].cells.length; a++) {
+                listaContentFila.push(rows[i].cells[a].textContent);
+            }
+            conjunto_lista.push(listaContentFila);
+        }
+          lista_mañana = []
+          lista_tarde = []
+          lista_noche = []
+
+          for (var i = 5; i < conjunto_lista[5].length; i++){
+            mañana = 0
+            tarde = 0
+            noche = 0
+            for (var a = 0; a < conjunto_lista.length; a++){
+              if (conjunto_lista[a][i] == "M"){
+                mañana += 1
+              }else if (conjunto_lista[a][i] == "T"){
+                tarde += 1
+              }else if (conjunto_lista[a][i] == "N"){
+                noche += 1
+              }
+            }
+            lista_mañana.push(mañana)
+            lista_tarde.push(tarde)
+            lista_noche.push(noche)
+          }
+
+          // Pintar las celdas
+          for ( var i = 0; i < conjunto_lista.length; i++){
+            for ( var a = 0; a < colores.length; a++){
+              if ( conjunto_lista[i][0] == colores[a][2] ){
+                // CUANDO DIAS PREVIOS ES MENOR QUE LA DIFERENCIA DE DIAS HACEMOS EL FOR NORMAL
+                if (colores[a][0] < colores[a][1]){
+                  for (var j = colores[a][0]; j <= colores[a][1]; j++) {
+                    var celda = rows[i].cells[j+5];
+                    if (celda.innerHTML == "V"){
+                      celda.innerHTML = "<i class='bx bxs-sun'></i><i style='color: white;' class='fa-solid fa-umbrella-beach'></i>"
+                      celda.style.backgroundColor = "#1cbce8";
+                      celda.style.color = "#FFD700";
+                    }
+                    else if (celda.innerHTML == "B"){
+                      celda.innerHTML = "<i class='fa-solid fa-hospital'></i><i style='color: black' class='fa-solid fa-user-injured'></i>"
+                      celda.style.color = "#ed1b24";
+                      celda.style.backgroundColor = "#fdfdfd";
+                    }
+                    else if (celda.innerHTML == "L"){
+                      celda.innerHTML = "<i class='fa-solid fa-user-clock'></i>"
+                      celda.style.color = "black";
+                      celda.style.backgroundColor = "#fdfdfd";
+                    }
+                    else {
+                      celda.style.color = "white";
+                      celda.style.backgroundColor = "green"
+                    }
+                  }
+                }
+                // EN CASO CONTRARIO SE HACE EL FOR INVERSO
+                else{
+                  for (var j = colores[a][0]; j >= colores[a][1]; j--) {
+                  var celda = rows[i].cells[j+5];
+                    if (celda.innerHTML == "V"){
+                      celda.innerHTML = "<i class='bx bxs-sun'></i><i style='color: white;' class='fa-solid fa-umbrella-beach'></i>"
+                      celda.style.backgroundColor = "#1cbce8";
+                      celda.style.color = "#FFD700";
+                    }
+                    else if (celda.innerHTML == "B"){
+                      celda.innerHTML = "<i class='fa-solid fa-hospital'></i><i style='color: black' class='fa-solid fa-user-injured'></i>"
+                      celda.style.color = "#ed1b24";
+                      celda.style.backgroundColor = "#fdfdfd";
+                    }
+                    else if (celda.innerHTML == "L"){
+                      celda.innerHTML = "<i class='fa-solid fa-user-clock'></i>"
+                      celda.style.color = "black";
+                      celda.style.backgroundColor = "#fdfdfd";
+                    }
+                    else {
+                      celda.style.color = "white";
+                      celda.style.backgroundColor = "green"
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          {% if "turnos/turnotodo/" in request.path %}
+            for ( var i = 0; i < lista_mañana.length; i++){
+              var celda = rows[0].insertCell(i+2);
+              celda.innerHTML = lista_mañana[i];
+              celda.style.color = "black"
+            }
+            for ( var i = 0; i < lista_tarde.length; i++){
+              var celda = rows[1].insertCell(i+2);
+              celda.innerHTML = lista_tarde[i];
+              celda.style.color = "black"
+            }
+            for ( var i = 0; i < lista_noche.length; i++){
+              var celda = rows[2].insertCell(i+2);
+              celda.innerHTML = lista_noche[i];
+              celda.style.color = "black"
+            }
+
+            for ( var c = 5; c < conjunto_lista[5].length; c++){
+              var celda = rows[5].cells[c]
+              var semana = celda.textContent.split(" ")
+              if(semana[0] == "dom"){
+                celda.style.backgroundColor = "#73737388";
+                celda.style.color = "white";
+                celda.style.backdropFilter = "blur(20px)";
+                for(var f = 6; f < conjunto_lista.length - 2 ; f++){
+                  var celda = rows[f].cells[c]
+                  celda.style.backgroundColor = "#73737388";
+                  celda.style.color = "white";
+                  celda.innerHTML = "<i class='bx bxs-alarm-snooze' ></i>"
+                  celda.onclick = null
+                }
+              }
+            }
+
+
+            for ( var c = 5; c < conjunto_lista[5].length; c++){
+              var celda = rows[5].cells[c]
+              var semana = celda.textContent.split(" ")
+              if(semana[0] == "dom"){
+                for(var f = 0; f < 3; f++){
+                  var celda = rows[f].cells[c-3]
+                  celda.style.backgroundColor = "#73737388";
+                  celda.style.color = "white";
+                  celda.innerHTML = "<i class='bx bxs-alarm-snooze' ></i>"
+                  celda.onclick = null
+                }
+              }
+            }
+          {% else %}
+          var necesidad = {{diccionario.necesarios}}
+          var green = {{green}}
+          var red = {{red}}
+
+            for ( var i = 0; i < lista_mañana.length; i++){
+              var celda = rows[0].insertCell(i+2);
+              celda.innerHTML = lista_mañana[i] - necesidad;
+              celda.setAttribute("onclick", "enviarSugerencias(this)");
+              if (parseInt(celda.innerHTML) >= green){
+                // green
+                celda.style.backgroundColor = "#33cc33"
+                celda.style.color = "black"
+                celda.onclick = null
+              }else if (parseInt(celda.innerHTML) <= red){
+                // red
+                celda.style.backgroundColor = "#ff3333"
+                celda.style.color = "black"
+              }else{
+                // yellow
+                celda.style.backgroundColor = "#ffd700"
+                celda.style.color = "black"
+              }
+            }
+            for ( var i = 0; i < lista_tarde.length; i++){
+              var celda = rows[1].insertCell(i+2);
+              celda.innerHTML = lista_tarde[i] - necesidad;
+              celda.setAttribute("onclick", "enviarSugerencias(this)");
+              if (parseInt(celda.innerHTML) >= green){
+                // green
+                celda.style.backgroundColor = "#33cc33"
+                celda.style.color = "black"
+                celda.onclick = null
+              }else if (parseInt(celda.innerHTML) <= red){
+                // red
+                celda.style.backgroundColor = "#ff3333"
+                celda.style.color = "black"
+              }else{
+                // yellow
+                celda.style.backgroundColor = "#ffd700"
+                celda.style.color = "black"
+              }
+            }
+            for ( var i = 0; i < lista_noche.length; i++){
+              var celda = rows[2].insertCell(i+2);
+              celda.innerHTML = lista_noche[i] - necesidad;
+              celda.setAttribute("onclick", "enviarSugerencias(this)");
+              if (parseInt(celda.innerHTML) >= green){
+                // green
+                celda.style.backgroundColor = "#33cc33"
+                celda.style.color = "black"
+                celda.onclick = null
+              }else if (parseInt(celda.innerHTML) <= red){
+                // red
+                celda.style.backgroundColor = "#ff3333"
+                celda.style.color = "black"
+              }else{
+                // yellow
+                celda.style.backgroundColor = "#ffd700"
+                celda.style.color = "black"
+              }
+            }
+
+            for ( var c = 5; c < conjunto_lista[5].length; c++){
+              var celda = rows[5].cells[c]
+              var semana = celda.textContent.split(" ")
+              if(semana[0] == "dom"){
+                celda.style.backgroundColor = "#73737388";
+                celda.style.color = "white";
+                celda.style.backdropFilter = "blur(20px)";
+                for(var f = 6; f < conjunto_lista.length - 2 ; f++){
+                  var celda = rows[f].cells[c]
+                  celda.style.backgroundColor = "#73737388";
+                  celda.style.color = "white";
+                  celda.innerHTML = "<i class='bx bxs-alarm-snooze' ></i>"
+                  celda.onclick = null
+                }
+              }
+            }
+
+
+            for ( var c = 5; c < conjunto_lista[5].length; c++){
+              var celda = rows[5].cells[c]
+              var semana = celda.textContent.split(" ")
+              if(semana[0] == "dom"){
+                for(var f = 0; f < 3; f++){
+                  var celda = rows[f].cells[c-3]
+                  celda.style.backgroundColor = "#73737388";
+                  celda.style.color = "white";
+                  celda.innerHTML = "<i class='bx bxs-alarm-snooze' ></i>"
+                  celda.onclick = null
+                }
+              }
+            }
+          {% endif%}
+
+    }
+
+
+
+
+
+    let enviarDatos = (celda) => {
+      var table = document.getElementById('dataTable');
+        var rows = table.rows;
+        var conjunto_lista = [];
+        for (var i = 0; i < rows.length; i++) {
+            var listaContentFila = [];
+            for (var a = 0; a < rows[i].cells.length; a++) {
+                listaContentFila.push(rows[i].cells[a].textContent);
+            }
+            conjunto_lista.push(listaContentFila);
+        }
+        // Obtener la posición de la celda dentro de la tabla
+        var fila = celda.parentNode.rowIndex;
+        var columna = celda.cellIndex;
+        var csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value; // Obtener el token CSRF desde el formulario
+
+        // Crear el objeto de datos a enviar
+        var datos = {
+          csrfmiddlewaretoken: csrftoken,
+          fila: fila,
+          columna: columna,
+          lista: conjunto_lista
+        };
+
+        // Realizar la solicitud fetch
+        fetch('/operarios/update/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+          },
+          body: JSON.stringify(datos) // Convertir los datos a JSON
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error en la solicitud fetch');
+          }
+          // Redirigir a una nueva página HTML después de una solicitud exitosa
+          window.location.href = '/operarios/update/';
+        })
+        .catch(function(error) {
+          // Manejar errores
+          console.error('Hubo un problema con la solicitud fetch:', error);
+        });
+    }
+     let enviarSugerencias = (celda) => {
+      var table = document.getElementById('dataTable');
+        var rows = table.rows;
+        var conjunto_lista = [];
+        for (var i = 0; i < rows.length; i++) {
+            var listaContentFila = [];
+            for (var a = 0; a < rows[i].cells.length; a++) {
+                listaContentFila.push(rows[i].cells[a].textContent);
+            }
+            conjunto_lista.push(listaContentFila);
+        }
+        // Obtener la posición de la celda dentro de la tabla
+        var fila = celda.parentNode.rowIndex;
+        var columna = celda.cellIndex;
+        var turno = conjunto_lista[fila][1]
+        var maquina = document.getElementById("maquina").value
+        var csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value; // Obtener el token CSRF desde el formulario
+
+        // Crear el objeto de datos a enviar
+        var datos = {
+          csrfmiddlewaretoken: csrftoken,
+          fila: fila,
+          columna: columna,
+          turno: turno,
+          lista: conjunto_lista,
+          maquina: maquina
+        };
+
+        // Realizar la solicitud fetch
+        fetch('/operarios/sugerencia/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+          },
+          body: JSON.stringify(datos) // Convertir los datos a JSON
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error en la solicitud fetch');
+          }
+          // Redirigir a una nueva página HTML después de una solicitud exitosa
+          window.location.href = '/operarios/sugerencia/';
+        })
+        .catch(function(error) {
+          // Manejar errores
+          console.error('Hubo un problema con la solicitud fetch:', error);
+        });
+
+
+    }
+
+
+      window.onload = function() {
+        contarCeldas();
+        combinarCeldas();
+        combinarCeldas2();
+      };
+
+    </script>
+
+  </body>
+</html>

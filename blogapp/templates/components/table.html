@@ -1,0 +1,26 @@
+<div class="table-responsive">
+  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+      <thead>
+          <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Maquina</th>
+              <th>Tecnica</th>
+              <th>Turno</th>
+              <th></th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for user in userList %}
+          <tr onclick="window.location.href='{% url 'user_detail' user.id %}';" style="cursor: pointer;">
+              <td>{{user.id}}</td>
+              <td>{{user.nombre}}</td>
+              <td>{{user.maquina}}</td>
+              <td>{{user.tecnica}}</td>
+              <td>{{user.turno}}</td>
+              <td><button class="btn btn-dark" style="background-color: #294ee5;" >EDITAR</button></td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+</div>

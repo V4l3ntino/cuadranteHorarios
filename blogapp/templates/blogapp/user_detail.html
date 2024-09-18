@@ -1,0 +1,79 @@
+{% extends 'blogapp/index.html' %}
+
+{% block headbox %}Detalles del operario{% endblock %}
+{% block fecha %}
+<a href="{% url 'dashboard' %}" class="btn btn-primary">Volver</a>
+{% endblock %}
+
+{% block contenido %}
+{% block filtrado %}
+
+{% endblock %}
+
+<div class="col-md-7 mx-auto" style="height: 46em;">
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Operario</label>
+                <input type="email" class="form-control" value="{{user.nombre}}" readonly>
+            </div>
+            <div class="form-group">
+                <label>Maquina</label>
+                <select class="form-control" name="maquina">
+                    <option value="autos" {% if user.maquina == 'autos' %} selected {% endif %}>Autos</option>
+                    <option value="laser" {% if user.maquina == 'laser' %} selected {% endif %}>Laser</option>
+                    <option value="tampo" {% if user.maquina == 'tampo' %} selected {% endif %}>Tampografía</option>
+                    <option value="pulpos" {% if user.maquina == 'pulpos' %} selected {% endif %}>Pulpos</option>
+                    <option value="digital" {% if user.maquina == 'digital' %} selected {% endif %}>Digital</option>
+                    <option value="bordado" {% if user.maquina == 'bordado' %} selected {% endif %}>Bordado</option>
+                    <option value="termo" {% if user.maquina == 'termo' %} selected {% endif %}>Termo</option>
+                    <option value="planchas" {% if user.maquina == 'planchas' %} selected {% endif %}>Planchas</option>
+                    <option value="sublimacion" {% if user.maquina == 'sublimacion' %} selected {% endif %}>Sublimación</option>
+                    <option value="otros" {% if user.maquina == 'otros' %} selected {% endif %}>Envasado y manipulación</option>
+                    <option value="No tiene" {% if user.maquina == 'No tiene' %} selected {% endif %}>No tiene</option>
+                    <option value="INACTIVO" {% if user.maquina == 'INACTIVO' %} selected {% endif %}>INACTIVO</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>2º Conocimiento</label>
+                <select class="form-control" name="conocimientos">
+                    <option value="autos" {% if user.conocimientos == 'autos' %} selected {% endif %}>Autos</option>
+                    <option value="No tiene" {% if user.conocimientos == 'No tiene' %} selected {% endif %}>No tiene</option>
+                    <option value="laser" {% if user.conocimientos == 'laser' %} selected {% endif %}>Laser</option>
+                    <option value="tampo" {% if user.conocimientos == 'tampo' %} selected {% endif %}>Tampografía</option>
+                    <option value="pulpos" {% if user.conocimientos == 'pulpos' %} selected {% endif %}>Pulpos</option>
+                    <option value="digital" {% if user.conocimientos == 'digital' %} selected {% endif %}>Digital</option>
+                    <option value="bordado" {% if user.conocimientos == 'bordado' %} selected {% endif %}>Bordado</option>
+                    <option value="termo" {% if user.conocimientos == 'termo' %} selected {% endif %}>Termo</option>
+                    <option value="planchas" {% if user.conocimientos == 'planchas' %} selected {% endif %}>Planchas</option>
+                    <option value="sublimacion" {% if user.conocimientos == 'sublimacion' %} selected {% endif %}>Sublimación</option>
+                    <option value="otros" {% if user.conocimientos == 'otros' %} selected {% endif %}>Envasado y manipulación</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Jornada</label>
+                <select class="form-control" name="turno">
+                    <option value="Mañana" {% if user.turno == 'Mañana' %} selected {% endif %}>Completa: M - N - T</option>
+                    <option value="Tarde" {% if user.turno == 'Tarde' %} selected {% endif %}>Completa: T - M - N</option>
+                    <option value="Noche" {% if user.turno == 'Noche' %} selected {% endif %}>Completa: N - T - M</option>
+                        <option value="sinMañana-T" {% if user.turno == 'sinMañana-T' %} selected {% endif %}>Parcial sin Mañana: T - N</option>
+                    <option value="sinMañana-N" {% if user.turno == 'sinMañana-N' %} selected {% endif %}>Parcial sin Mañana: N - T</option>
+                    <option value="sinTarde-M" {% if user.turno == 'sinTarde-M' %} selected {% endif %}>Parcial sin Tarde: M - N</option>
+                    <option value="sinTarde-N" {% if user.turno == 'sinTarde-N' %} selected {% endif %}>Parcial sin Tarde: N - M</option>
+                    <option value="sinNoche-M" {% if user.turno == 'sinNoche-M' %} selected {% endif %}>Parcial sin Noche: M - T</option>
+                    <option value="sinNoche-T" {% if user.turno == 'sinNoche-T' %} selected {% endif %}>Parcial sin Noche: T - M</option>
+                    <option value="estatica-M" {% if user.turno == 'estatica-M' %} selected {% endif %}>Estatica (no rota): M</option>
+                    <option value="estatica-T" {% if user.turno == 'estatica-T' %} selected {% endif %}>Estatica (no rota): T</option>
+                    <option value="estatica-N" {% if user.turno == 'estatica-N' %} selected {% endif %}>Estatica (no rota): N</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-dark" style="background-color: #294ee5;">Aceptar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block footbox %}
+
+{% endblock %}

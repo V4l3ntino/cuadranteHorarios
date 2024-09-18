@@ -1,0 +1,108 @@
+{% extends 'blogapp/index.html' %} 
+{% block fecha %}{% endblock %}
+{% block headbox %}
+    {% if request.user.is_superuser %}
+        <p>Historial de expedientes</p>
+    {% else %}
+        <a href="{% url 'misExpedientes' %}" class="btn btn-primary">Ver historial</a>
+    {% endif %}
+{% endblock %}
+
+
+{% block seleccionar %}
+<select class="form-control" name="turno">
+  <option value="Todo" {% if request.POST.turno == 'Todo' %} selected {% endif %}>Todo</option>
+  <option value="Mañana" {% if request.POST.turno == 'Mañana' %} selected {% endif %}>Mañana</option>
+  <option value="Tarde" {% if request.POST.turno == 'Tarde' %} selected {% endif %}>Tarde</option>
+  <option value="Noche" {% if request.POST.turno == 'Noche' %} selected {% endif %}>Noche</option>
+  <option value="sinMañana-T" {% if request.POST.turno == 'sinMañana-T' %} selected {% endif %}>Parcial sin Mañana: T - N</option>
+  <option value="sinMañana-N" {% if request.POST.turno == 'sinMañana-N' %} selected {% endif %}>Parcial sin Mañana: N - T</option>
+  <option value="sinTarde-M" {% if request.POST.turno == 'sinTarde-M' %} selected {% endif %}>Parcial sin Tarde: M - N</option>
+  <option value="sinTarde-N" {% if request.POST.turno == 'sinTarde-N' %} selected {% endif %}>Parcial sin Tarde: N - M</option>
+  <option value="sinNoche-M" {% if request.POST.turno == 'sinNoche-M' %} selected {% endif %}>Parcial sin Noche: M - T</option>
+  <option value="sinNoche-T" {% if request.POST.turno == 'sinNoche-T' %} selected {% endif %}>Parcial sin Noche: T - M</option>
+  <option value="estatica-M" {% if request.POST.turno == 'estatica-M' %} selected {% endif %}>Estatica (no rota): M</option>
+  <option value="estatica-T" {% if request.POST.turno == 'estatica-T' %} selected {% endif %}>Estatica (no rota): T</option>
+  <option value="estatica-N" {% if request.POST.turno == 'estatica-N' %} selected {% endif %}>Estatica (no rota): N</option>
+</select>
+<select class="form-control" name="maquina">
+    <option value="TODO" {% if request.POST.maquina == 'TODO' %} selected {% endif %}>Maquinas</option>
+    <option value="autos" {% if request.POST.maquina == 'autos' %} selected {% endif %}>Autos</option>
+    <option value="laser" {% if request.POST.maquina == 'laser' %} selected {% endif %}>Laser</option>
+    <option value="tampo" {% if request.POST.maquina == 'tampo' %} selected {% endif %}>Tampografía</option>
+    <option value="pulpos" {% if request.POST.maquina == 'pulpos' %} selected {% endif %}>Pulpos</option>
+    <option value="digital" {% if request.POST.maquina == 'digital' %} selected {% endif %}>Digital</option>
+    <option value="bordado" {% if request.POST.maquina == 'bordado' %} selected {% endif %}>Bordado</option>
+    <option value="termo" {% if request.POST.maquina == 'termo' %} selected {% endif %}>Termo</option>
+    <option value="planchas" {% if request.POST.maquina == 'planchas' %} selected {% endif %}>Planchas</option>
+    <option value="horno" {% if request.POST.maquina == 'horno' %} selected {% endif %}>Hornos</option>
+    <option value="sublimacion" {% if request.POST.maquina == 'sublimacion' %} selected {% endif %}>Sublimación</option>
+    <option value="otros" {% if request.POST.maquina == 'otros' %} selected {% endif %}>Envasado y manipulación</option>
+</select>
+{% endblock %}
+
+
+{% block contenido %}
+
+
+<div class="table-responsive" style="height: 46em;">
+    <table class="table table-bordered" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Maquina</th>
+                <th>Turno</th>
+                {% if request.user.is_superuser %}
+                <th>Expedientes</th>
+                <th></th>
+                {% else %}
+                <th>Acción</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% if request.user.is_superuser %}
+                {% for user in users|dictsortreversed:"expediente" %}
+                <tr onclick="window.location.href='{% url 'user_detail_expediente' user.id %}';" style="cursor: pointer;">
+                    <td>{{user.id}}</td>
+                    <td>{{user.nombre}}</td>
+                    <td>{{user.apellido}}</td>
+                    <td>{{user.maquina}}</td>
+                    <td>{{user.turno}}</td>
+                    <td>{{user.expediente}}</td>
+                    <td><button class="btn btn-dark" style="background-color: #294ee5;"><i class="fa-solid fa-file-invoice"></i></button></td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                {% for user in users %}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.nombre}}</td>
+                    <td>{{user.apellido}}</td>
+                    <td>{{user.maquina}}</td>
+                    <td>{{user.turno}}</td>
+                    <td>
+                        <div class="d-flex">
+                            <form action="{% url 'crearparte' user.id %}" method="get">
+                                <button class="btn btn-danger">
+                                  <i class='bx bxs-tired' ></i>
+                                </button>
+                            </form>
+                            <form action="{% url 'crearincidencia' user.id %}" method="get" style="margin-left: 10px;">
+                                <button class="btn btn-primary">
+                                    <i class='bx bx-file'></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}              
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

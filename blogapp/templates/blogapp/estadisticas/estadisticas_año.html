@@ -1,0 +1,207 @@
+{% extends 'blogapp/index.html' %}
+
+{% block headbox %}Gráfico de un Año entero {% if user is not None %}: {{user.nombre}}, {{user.apellido}}{% endif %}{% endblock %}
+
+{% block fecha %}<a href="{% url 'dashboard' %}" class="btn btn-primary">Volver</a>{% endblock %}
+
+{% block filtrado %}
+    
+
+<form method="POST"
+class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    {% csrf_token %}    
+    <select class="form-control" name="tipo">
+        <option value="d" {% if request.POST.tipo == 'd' or tipo == 'd' %} selected {% endif %}>Dia</option>
+        <option value="s" {% if request.POST.tipo == 's' or tipo == 's' %} selected {% endif %}>Semana</option>
+        <option value="a" {% if request.POST.tipo == 'a' or tipo == 'a' %} selected {% endif %}>Año</option>
+    </select>
+    <input class="border rounded-4" type="date" name="fecha" value="{{ fecha_modificada }}" min="{{ minValue }}">
+    <button class="btn btn-dark botonazo" type="submit"><i class="fas fa-search fa-sm"></i></button>
+
+</form>
+{% endblock %}
+
+{% block contenido %}
+
+<div>
+    <canvas id="myChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    
+    // meses = {'Enero': 1, 'Febrero': 2, 'Marzo': 3, 'Abril': 4, 'Mayo': 5, 'Junio': 6, 'Julio': 7, 'Agosto': 8, 'Septiembre': 9, 'Octubre': 10, 'Noviembre': 11, 'Diciembre': 12}
+    var eneroMañana = {{ Enero_Mañana }};
+    var eneroTarde = {{ Enero_Tarde }};
+    var eneroNoche = {{ Enero_Noche }};
+    var eneroLicencia = {{ Enero_Licencia }};
+    var eneroVacaciones = {{ Enero_Vacaciones }};
+    var eneroFaltas = {{ Enero_Faltas }};
+
+        // Febrero
+    var febreroMañana = {{ Febrero_Mañana }};
+    var febreroTarde = {{ Febrero_Tarde }};
+    var febreroNoche = {{ Febrero_Noche }};
+    var febreroLicencia = {{ Febrero_Licencia }};
+    var febreroVacaciones = {{ Febrero_Vacaciones }};
+    var febreroFaltas = {{ Febrero_Faltas }};
+
+    // Marzo
+    var marzoMañana = {{ Marzo_Mañana }};
+    var marzoTarde = {{ Marzo_Tarde }};
+    var marzoNoche = {{ Marzo_Noche }};
+    var marzoLicencia = {{ Marzo_Licencia }};
+    var marzoVacaciones = {{ Marzo_Vacaciones }};
+    var marzoFaltas = {{ Marzo_Faltas }};
+
+    // Abril
+    var abrilMañana = {{ Abril_Mañana }};
+    var abrilTarde = {{ Abril_Tarde }};
+    var abrilNoche = {{ Abril_Noche }};
+    var abrilLicencia = {{ Abril_Licencia }};
+    var abrilVacaciones = {{ Abril_Vacaciones }};
+    var abrilFaltas = {{ Abril_Faltas }};
+
+    // Mayo
+    var mayoMañana = {{ Mayo_Mañana }};
+    var mayoTarde = {{ Mayo_Tarde }};
+    var mayoNoche = {{ Mayo_Noche }};
+    var mayoLicencia = {{ Mayo_Licencia }};
+    var mayoVacaciones = {{ Mayo_Vacaciones }};
+    var mayoFaltas = {{ Mayo_Faltas }};
+
+    // Junio
+    var junioMañana = {{ Junio_Mañana }};
+    var junioTarde = {{ Junio_Tarde }};
+    var junioNoche = {{ Junio_Noche }};
+    var junioLicencia = {{ Junio_Licencia }};
+    var junioVacaciones = {{ Junio_Vacaciones }};
+    var junioFaltas = {{ Junio_Faltas }};
+
+    // Julio
+    var julioMañana = {{ Julio_Mañana }};
+    var julioTarde = {{ Julio_Tarde }};
+    var julioNoche = {{ Julio_Noche }};
+    var julioLicencia = {{ Julio_Licencia }};
+    var julioVacaciones = {{ Julio_Vacaciones }};
+    var julioFaltas = {{ Julio_Faltas }};
+
+    // Agosto
+    var agostoMañana = {{ Agosto_Mañana }};
+    var agostoTarde = {{ Agosto_Tarde }};
+    var agostoNoche = {{ Agosto_Noche }};
+    var agostoLicencia = {{ Agosto_Licencia }};
+    var agostoVacaciones = {{ Agosto_Vacaciones }};
+    var agostoFaltas = {{ Agosto_Faltas }};
+
+    // Septiembre
+    var septiembreMañana = {{ Septiembre_Mañana }};
+    var septiembreTarde = {{ Septiembre_Tarde }};
+    var septiembreNoche = {{ Septiembre_Noche }};
+    var septiembreLicencia = {{ Septiembre_Licencia }};
+    var septiembreVacaciones = {{ Septiembre_Vacaciones }};
+    var septiembreFaltas = {{ Septiembre_Faltas }};
+
+    // Octubre
+    var octubreMañana = {{ Octubre_Mañana }};
+    var octubreTarde = {{ Octubre_Tarde }};
+    var octubreNoche = {{ Octubre_Noche }};
+    var octubreLicencia = {{ Octubre_Licencia }};
+    var octubreVacaciones = {{ Octubre_Vacaciones }};
+    var octubreFaltas = {{ Octubre_Faltas }};
+
+    // Noviembre
+    var noviembreMañana = {{ Noviembre_Mañana }};
+    var noviembreTarde = {{ Noviembre_Tarde }};
+    var noviembreNoche = {{ Noviembre_Noche }};
+    var noviembreLicencia = {{ Noviembre_Licencia }};
+    var noviembreVacaciones = {{ Noviembre_Vacaciones }};
+    var noviembreFaltas = {{ Noviembre_Faltas }};
+
+    // Diciembre
+    var diciembreMañana = {{ Diciembre_Mañana }};
+    var diciembreTarde = {{ Diciembre_Tarde }};
+    var diciembreNoche = {{ Diciembre_Noche }};
+    var diciembreLicencia = {{ Diciembre_Licencia }};
+    var diciembreVacaciones = {{ Diciembre_Vacaciones }};
+    var diciembreFaltas = {{ Diciembre_Faltas }};
+
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+        
+        // Datos para cada turno con dos sub-categorías
+        const data = {
+            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'], // Etiquetas para los grupos
+            datasets: [
+                {
+                    label: 'Mañana', // Etiqueta para el primer conjunto de datos
+                    data: [eneroMañana, febreroMañana, marzoMañana, abrilMañana, mayoMañana, junioMañana, julioMañana, agostoMañana, septiembreMañana, octubreMañana, noviembreMañana, diciembreMañana], // Valores para cada grupo en la primera subcategoría
+                    backgroundColor: 'rgba(12, 74, 110, 0.2)',
+                    borderColor: 'rgba(12, 74, 110, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Tarde', // Etiqueta para el segundo conjunto de datos
+                    data: [eneroTarde, febreroTarde, marzoTarde, abrilTarde, mayoTarde, junioTarde, julioTarde, agostoTarde, septiembreTarde, octubreTarde, noviembreTarde, diciembreTarde], // Valores para cada grupo en la segunda subcategoría
+                    backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                    borderColor: 'rgba(255, 165, 0, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Noche', // Etiqueta para el segundo conjunto de datos
+                    data: [eneroNoche, febreroNoche, marzoNoche, abrilNoche, mayoNoche, junioNoche, julioNoche, agostoNoche, septiembreNoche, octubreNoche, noviembreNoche, diciembreNoche], // Valores para cada grupo en la segunda subcategoría
+                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                    borderColor: 'rgba(0, 0, 0, 0.2)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Licencia', // Etiqueta para el segundo conjunto de datos
+                    data: [eneroLicencia, febreroLicencia, marzoLicencia, abrilLicencia, mayoLicencia, junioLicencia, julioLicencia, agostoLicencia, septiembreLicencia, octubreLicencia, noviembreLicencia, diciembreLicencia], // Valores para cada grupo en la segunda subcategoría
+                    backgroundColor: 'rgba(90, 122, 35, 0.2)', 
+                    borderColor: 'rgba(90, 122, 35,  1)', 
+                    borderWidth: 1
+                },
+                {
+                    label: 'Vacaciones', // Etiqueta para el segundo conjunto de datos
+                    data: [eneroVacaciones, febreroVacaciones, marzoVacaciones, abrilVacaciones, mayoVacaciones, junioVacaciones, julioVacaciones, agostoVacaciones, septiembreVacaciones, octubreVacaciones, noviembreVacaciones, diciembreVacaciones], // Valores para cada grupo en la segunda subcategoría
+                    backgroundColor: 'rgba(64, 224, 208, 0.2)', 
+                    borderColor: 'rgba(64, 224, 208, 1)', 
+                    borderWidth: 1
+                },
+                {
+                    label: 'Faltas de Asistencia', // Etiqueta para el segundo conjunto de datos
+                    data: [eneroFaltas, febreroFaltas, marzoFaltas, abrilFaltas, mayoFaltas, junioFaltas, julioFaltas, agostoFaltas, septiembreFaltas, octubreFaltas, noviembreFaltas, diciembreFaltas], // Valores para cada grupo en la segunda subcategoría
+                    backgroundColor: 'rgba(255, 0, 0, 0.2)', 
+                    borderColor: 'rgba(255, 0, 0, 1)', 
+                    borderWidth: 1
+                }
+            ]
+        };
+
+        // Configuración del gráfico
+        const config = {
+            type: 'line', // Tipo de gráfico
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true // El eje Y empieza en cero
+                    }
+                },
+                responsive: true, // Gráfico adaptativo
+                plugins: {
+                    legend: {
+                        position: 'top', // Posición de la leyenda
+                    },
+                    title: {
+                        display: true,
+                        text: 'Comparación de Turnos' // Título del gráfico
+                    }
+                }
+            }
+        };
+
+        // Crear el gráfico
+        const myChart = new Chart(ctx, config);
+  </script>  
+
+{% endblock %}
